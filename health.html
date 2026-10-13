@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="kk">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>MedCare — Денсаулық</title>
+
+    <link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet" href="css/medcare-unified.css">
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            🏥 <span>Med</span>Care
+        </div>
+
+        <ul class="menu">
+
+            <li><a href="index.html">🏠 Басты бет</a></li>
+
+            <li><a href="doctors.html">👨‍⚕️ Дәрігерлер</a></li>
+
+            <li><a href="appointment.html">
+                📅 Қабылдауға жазылу
+            </a></li>
+
+            <li><a href="appointments.html">
+                📋 Менің жазылуларым
+            </a></li>
+
+            <li><a href="medicines.html">
+                💊 Дәрілер
+            </a></li>
+
+            <li><a href="health.html"
+                   class="active">
+                ❤️ Денсаулық
+            </a></li>
+
+            <li><a href="profile.html">
+                ⚙️ Профиль
+            </a></li>
+
+        </ul>
+
+    </aside>
+
+
+    <main class="main">
+
+        <h1>❤️ Денсаулығым</h1>
+
+        <p>Сіздің негізгі көрсеткіштеріңіз</p>
+
+        <div class="cards">
+
+            <div class="card">
+
+                <h3>❤️ Қан қысымы</h3>
+
+                <h2>120/80</h2>
+
+                <p>Қалыпты</p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>💓 Пульс</h3>
+
+                <h2>72 bpm</h2>
+
+                <p>Қалыпты</p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>🌡️ Температура</h3>
+
+                <h2>36.6°C</h2>
+
+                <p>Қалыпты</p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>⚖️ BMI</h3>
+
+                <h2 id="bmi">
+                    22.4
+                </h2>
+
+                <p>Индекс массы тела</p>
+
+            </div>
+
+        </div>
+
+
+        <div class="section">
+
+            <h2>⚖️ BMI калькуляторы</h2>
+
+            <br>
+
+            <input
+                type="number"
+                id="weight"
+                placeholder="Салмақ (кг)"
+            >
+
+            <br><br>
+
+            <input
+                type="number"
+                id="height"
+                placeholder="Бой (см)"
+            >
+
+            <br><br>
+
+            <button onclick="calculateBMI()">
+                Есептеу
+            </button>
+
+            <h3 id="result"></h3>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        function calculateBMI() {
+
+            let weight =
+                Number(
+                    document.getElementById(
+                        "weight"
+                    ).value
+                );
+
+            let height =
+                Number(
+                    document.getElementById(
+                        "height"
+                    ).value
+                );
+
+            if (
+                weight <= 0 ||
+                height <= 0
+            ) {
+
+                alert(
+                    "Мәліметтерді дұрыс енгізіңіз!"
+                );
+
+                return;
+
+            }
+
+            height = height / 100;
+
+            let bmi =
+                weight /
+                (height * height);
+
+            bmi = bmi.toFixed(1);
+
+            document.getElementById(
+                "result"
+            ).innerText =
+                "Сіздің BMI: " + bmi;
+
+        }
+
+    </script>
+
+</body>
+
+</html>

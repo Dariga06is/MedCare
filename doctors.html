@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="kk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Дәрігерлер — MedCare</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .page-head {
+            margin-bottom: 25px;
+        }
+
+        .page-head h1 {
+            margin: 5px 0;
+        }
+
+        .page-head p {
+            font-size: 13px;
+        }
+
+        /* MY CLINIC */
+
+        .my-clinic {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+
+            padding: 22px;
+            margin-bottom: 30px;
+
+            background: linear-gradient(120deg, #fff, #e6f5ff);
+            border: 1px solid #d6e9f5;
+            border-radius: 18px;
+        }
+
+        .my-clinic-icon {
+            width: 60px;
+            height: 60px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: white;
+            border-radius: 14px;
+
+            font-size: 30px;
+        }
+
+        .my-clinic-info {
+            flex: 1;
+        }
+
+        .my-clinic-info span {
+            color: #1684d5;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .my-clinic-info h2 {
+            margin: 5px 0;
+        }
+
+        .my-clinic-info p {
+            font-size: 12px;
+        }
+
+        .clinic-open {
+            padding: 10px 16px;
+
+            background: #1677c8;
+            color: white;
+
+            border-radius: 9px;
+
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        /* SECTION */
+
+        .doctor-section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 16px;
+        }
+
+        .section-title p {
+            margin-top: 4px;
+            font-size: 11px;
+        }
+
+        /* MY DOCTORS */
+
+        .my-doctors {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .my-doctor {
+            padding: 20px;
+
+            background: white;
+            border: 1px solid #dfe9f0;
+            border-radius: 16px;
+        }
+
+        .doctor-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .doctor-avatar {
+            width: 58px;
+            height: 58px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #e8f6ff;
+            border-radius: 50%;
+
+            font-size: 28px;
+        }
+
+        .doctor-top h3 {
+            margin-bottom: 4px;
+        }
+
+        .doctor-specialty {
+            color: #1684d5;
+            font-size: 10px;
+        }
+
+        .doctor-clinic {
+            margin-top: 13px;
+            color: #7c8f9e;
+            font-size: 11px;
+        }
+
+        .doctor-actions {
+            display: flex;
+            gap: 7px;
+
+            margin-top: 17px;
+        }
+
+        .doctor-actions a {
+            flex: 1;
+            padding: 9px;
+
+            text-align: center;
+
+            background: #edf8ff;
+            color: #1677c8;
+
+            border-radius: 8px;
+
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .doctor-actions .message-btn {
+            background: #1677c8;
+            color: white;
+        }
+
+        /* SEARCH */
+
+        .doctor-search {
+            display: flex;
+            margin-bottom: 15px;
+
+            background: white;
+            border: 1px solid #dce7ef;
+            border-radius: 11px;
+
+            overflow: hidden;
+        }
+
+        .doctor-search input {
+            flex: 1;
+
+            padding: 13px;
+
+            border: none;
+            outline: none;
+            background: transparent;
+        }
+
+        /* FILTER */
+
+        .doctor-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+
+            margin-bottom: 18px;
+        }
+
+        .doctor-filter {
+            padding: 8px 14px;
+
+            background: white;
+            color: #647b8d;
+
+            border: 1px solid #dce7ef;
+            border-radius: 20px;
+
+            cursor: pointer;
+
+            font-size: 11px;
+        }
+
+        .doctor-filter.active {
+            background: #1677c8;
+            color: white;
+        }
+
+        /* OTHER DOCTORS */
+
+        .all-doctors {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .doctor-card {
+            padding: 18px;
+
+            background: white;
+            border: 1px solid #dfe9f0;
+            border-radius: 15px;
+        }
+
+        .doctor-card .doctor-avatar {
+            margin-bottom: 13px;
+        }
+
+        .doctor-card h3 {
+            margin-bottom: 5px;
+        }
+
+        .doctor-card p {
+            margin-bottom: 5px;
+            font-size: 10px;
+        }
+
+        .doctor-rating {
+            color: #e7a119 !important;
+        }
+
+        .details-link {
+            display: block;
+
+            margin-top: 14px;
+            padding: 9px;
+
+            text-align: center;
+
+            background: #edf8ff;
+            color: #1677c8;
+
+            border-radius: 8px;
+
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .no-doctors {
+            display: none;
+
+            padding: 30px;
+
+            text-align: center;
+
+            background: white;
+            border-radius: 15px;
+        }
+
+        @media (max-width: 1100px) {
+            .my-doctors {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .all-doctors {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .my-doctors,
+            .all-doctors {
+                grid-template-columns: 1fr;
+            }
+
+            .my-clinic {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+<link rel="stylesheet" href="css/medcare-unified.css">
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+        <div class="logo-icon">✚</div>
+
+        <div>
+            <h2>MedCare</h2>
+            <span>Medical Platform</span>
+        </div>
+    </div>
+
+    <nav class="menu">
+
+        <a href="index.html">🏠 Басты бет</a>
+
+        <a href="clinic.html">🏥 Клиникалар</a>
+
+        <a href="doctors.html" class="active">
+            👨‍⚕️ Дәрігерлер
+        </a>
+
+        <a href="map.html">
+            <span>🗺️</span>
+            <span>Клиникалар картасы</span>
+        </a>
+
+        <div class="menu-title">
+            МАМАНДЫҚТАР
+        </div>
+
+        <a href="specialties/dentistry.html">🦷 Стоматология</a>
+        <a href="specialties/therapist.html">🩺 Терапевт</a>
+        <a href="specialties/neurologist.html">🧠 Невропатолог</a>
+        <a href="specialties/ophthalmologist.html">👁 Офтальмолог</a>
+        <a href="specialties/traumatologist.html">🦴 Травматолог</a>
+        <a href="specialties/gynecologist.html">👩‍⚕️ Гинеколог</a>
+        <a href="specialties/urologist.html">👨‍⚕️ Уролог</a>
+        <a href="specialties/cardiologist.html">❤️ Кардиолог</a>
+
+        <div class="menu-title">
+            ЖЕКЕ КАБИНЕТ
+        </div>
+
+        <a href="appointments.html">📅 Менің жазылуларым</a>
+        <a href="profile.html">👤 Профиль</a>
+
+    </nav>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+    <div class="page-head">
+
+        <span class="page-small-title">
+            MedCare / Дәрігерлер
+        </span>
+
+        <h1>Дәрігерлер</h1>
+
+        <p>
+            Өз дәрігерлеріңізбен байланысыңыз немесе басқа маманды табыңыз
+        </p>
+
+    </div>
+
+
+    <!-- MY CLINIC -->
+
+    <section class="my-clinic">
+
+        <div class="my-clinic-icon">
+            🏥
+        </div>
+
+        <div class="my-clinic-info">
+
+            <span>
+                МЕНІҢ ПОЛИКЛИНИКАМ
+            </span>
+
+            <h2>
+                №5 қалалық емхана
+            </h2>
+
+            <p>
+                Сіз осы медициналық ұйымға тіркелгенсіз
+            </p>
+
+        </div>
+
+        <a href="clinic.html?id=5"
+           class="clinic-open">
+            Поликлиниканы ашу →
+        </a>
+
+    </section>
+
+
+    <!-- MY DOCTORS -->
+
+    <section class="doctor-section">
+
+        <div class="section-title">
+
+            <div>
+                <h2>Менің дәрігерлерім</h2>
+
+                <p>
+                    Тіркелген поликлиникаңыздағы дәрігерлер
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="my-doctors">
+
+
+            <!-- DOCTOR 1 -->
+
+            <div class="my-doctor">
+
+                <div class="doctor-top">
+
+                    <div class="doctor-avatar">
+                        👩‍⚕️
+                    </div>
+
+                    <div>
+                        <h3>Айдана Серсенова</h3>
+
+                        <span class="doctor-specialty">
+                            Учаскелік терапевт
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="doctor-clinic">
+                    🏥 №5 қалалық емхана
+                </div>
+
+                <div class="doctor-actions">
+
+    <a href="doctor-profile.html?doctor=1">
+        👤 Профиль
+    </a>
+
+    <a href="booking.html?doctor=1"
+       class="message-btn">
+        📅 Жазылу
+    </a>
+
+</div>
+
+
+            <!-- DOCTOR 2 -->
+
+            <div class="my-doctor">
+
+                <div class="doctor-top">
+
+                    <div class="doctor-avatar">
+                        👨‍⚕️
+                    </div>
+
+                    <div>
+                        <h3>Серікұлы Нұрлан</h3>
+
+                        <span class="doctor-specialty">
+                            Кардиолог
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="doctor-clinic">
+                    🏥 №5 қалалық емхана
+                </div>
+
+              <div class="doctor-actions">
+
+    <a href="doctor-profile.html?doctor=2">
+        👤 Профиль
+    </a>
+
+    <a href="booking.html?doctor=2"
+       class="message-btn">
+        📅 Жазылу
+    </a>
+
+</div>
+
+
+            <!-- DOCTOR 3 -->
+
+            <div class="my-doctor">
+
+                <div class="doctor-top">
+
+                    <div class="doctor-avatar">
+                        👩‍⚕️
+                    </div>
+
+                    <div>
+                        <h3>Ибраимова Мадина</h3>
+
+                        <span class="doctor-specialty">
+                            Офтальмолог
+                        </span>
+                    </div>
+
+                </div>
+
+               <div class="doctor-actions">
+
+    <a href="doctor-profile.html?doctor=3">
+        👤 Профиль
+    </a>
+
+    <a href="booking.html?doctor=3"
+       class="message-btn">
+        📅 Жазылу
+    </a>
+
+</div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- OTHER DOCTORS -->
+
+    <section class="doctor-section">
+
+        <div class="section-title">
+
+            <div>
+                <h2>Басқа дәрігерлер</h2>
+
+                <p>
+                    Басқа клиникалардағы мамандарды табыңыз
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- SEARCH -->
+
+        <div class="doctor-search">
+
+            <input
+                id="doctorSearch"
+                type="text"
+                placeholder="🔎 Дәрігер немесе мамандық іздеу..."
+            >
+
+        </div>
+
+
+        <!-- FILTERS -->
+
+        <div class="doctor-filters">
+
+            <button class="doctor-filter active"
+                    data-filter="all">
+                Барлығы
+            </button>
+
+            <button class="doctor-filter"
+                    data-filter="dentist">
+                Стоматолог
+            </button>
+
+            <button class="doctor-filter"
+                    data-filter="therapist">
+                Терапевт
+            </button>
+
+            <button class="doctor-filter"
+                    data-filter="cardiologist">
+                Кардиолог
+            </button>
+
+            <button class="doctor-filter"
+                    data-filter="neurologist">
+                Невропатолог
+            </button>
+
+        </div>
+
+
+        <!-- DOCTOR CARDS -->
+
+        <div class="all-doctors"
+             id="allDoctors">
+
+
+            <div class="doctor-card"
+                 data-type="dentist">
+
+                <div class="doctor-avatar">
+                    👩‍⚕️
+                </div>
+
+                <h3>Ахметова Алия</h3>
+
+                <p>Стоматолог</p>
+
+                <p>🏥 City Dent</p>
+
+                <p class="doctor-rating">
+                    ⭐ 4.9
+                </p>
+
+                <a href="booking.html?clinic=2&specialty=Стоматология"
+                   class="details-link">
+                    Жазылу
+                </a>
+
+            </div>
+
+
+            <div class="doctor-card"
+                 data-type="therapist">
+
+                <div class="doctor-avatar">
+                    👨‍⚕️
+                </div>
+
+                <h3>Қайратов Ерлан</h3>
+
+                <p>Терапевт</p>
+
+                <p>🏥 Medical Center</p>
+
+                <p class="doctor-rating">
+                    ⭐ 4.8
+                </p>
+
+                <a href="booking.html?specialty=Терапевт" class="details-link">Жазылу</a>
+
+            </div>
+
+
+            <div class="doctor-card"
+                 data-type="cardiologist">
+
+                <div class="doctor-avatar">
+                    👩‍⚕️
+                </div>
+
+                <h3>Абилова Аружан</h3>
+
+                <p>Кардиолог</p>
+
+                <p>🏥 Heart Center</p>
+
+                <p class="doctor-rating">
+                    ⭐ 4.9
+                </p>
+
+                <a href="booking.html?specialty=Кардиолог" class="details-link">Жазылу</a>
+
+            </div>
+
+
+            <div class="doctor-card"
+                 data-type="neurologist">
+
+                <div class="doctor-avatar">
+                    👨‍⚕️
+                </div>
+
+                <h3>Омаров Данияр</h3>
+
+                <p>Невропатолог</p>
+
+                <p>🏥 Astana Medical</p>
+
+                <p class="doctor-rating">
+                    ⭐ 4.7
+                </p>
+
+                <a href="booking.html?specialty=Невропатолог" class="details-link">Жазылу</a>
+
+            </div>
+
+        </div>
+
+
+        <div class="no-doctors"
+             id="noDoctors">
+
+            <h3>Дәрігер табылмады</h3>
+
+            <p>
+                Басқа атаумен іздеп көріңіз
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script>
+
+    const search =
+        document.getElementById("doctorSearch");
+
+    const cards =
+        document.querySelectorAll(".doctor-card");
+
+    const filters =
+        document.querySelectorAll(".doctor-filter");
+
+    const noDoctors =
+        document.getElementById("noDoctors");
+
+    let currentFilter = "all";
+
+
+    function updateDoctors() {
+
+        const value =
+            search.value.toLowerCase().trim();
+
+        let visible = 0;
+
+
+        cards.forEach(function(card) {
+
+            const text =
+                card.innerText.toLowerCase();
+
+            const type =
+                card.dataset.type;
+
+            const searchMatch =
+                text.includes(value);
+
+            const filterMatch =
+                currentFilter === "all" ||
+                currentFilter === type;
+
+
+            if (searchMatch && filterMatch) {
+
+                card.style.display = "block";
+
+                visible++;
+
+            } else {
+
+                card.style.display = "none";
+
+            }
+
+        });
+
+
+        noDoctors.style.display =
+            visible === 0
+                ? "block"
+                : "none";
+
+    }
+
+
+    search.addEventListener(
+        "input",
+        updateDoctors
+    );
+
+
+    filters.forEach(function(button) {
+
+        button.addEventListener(
+            "click",
+            function() {
+
+                filters.forEach(function(item) {
+                    item.classList.remove("active");
+                });
+
+                button.classList.add("active");
+
+                currentFilter =
+                    button.dataset.filter;
+
+                updateDoctors();
+
+            }
+        );
+
+    });
+
+</script>
+
+</body>
+</html>

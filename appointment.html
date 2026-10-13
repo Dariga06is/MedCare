@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="kk">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>MedCare — Менің жазылуларым</title>
+
+    <link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet" href="css/medcare-unified.css">
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            🏥 <span>Med</span>Care
+        </div>
+
+        <ul class="menu">
+
+            <li>
+                <a href="index.html">
+                    🏠 Басты бет
+                </a>
+            </li>
+
+            <li>
+                <a href="doctors.html">
+                    👨‍⚕️ Дәрігерлер
+                </a>
+            </li>
+
+            <li>
+                <a href="appointment.html">
+                    📅 Қабылдауға жазылу
+                </a>
+            </li>
+
+            <li>
+                <a href="appointments.html"
+                   class="active">
+                    📋 Менің жазылуларым
+                </a>
+            </li>
+
+            <li>
+                <a href="medicines.html">
+                    💊 Дәрілер
+                </a>
+            </li>
+
+            <li>
+                <a href="health.html">
+                    ❤️ Денсаулық
+                </a>
+            </li>
+
+            <li>
+                <a href="profile.html">
+                    ⚙️ Профиль
+                </a>
+            </li>
+
+        </ul>
+
+    </aside>
+
+
+    <main class="main">
+
+        <h1>📋 Менің жазылуларым</h1>
+
+        <br>
+
+        <div class="section">
+
+            <h2>Келесі қабылдау</h2>
+
+            <br>
+
+            <h3 id="doctorName">
+                Дәрігер
+            </h3>
+
+            <p id="appointmentDate">
+                Күн
+            </p>
+
+            <p id="appointmentTime">
+                Уақыт
+            </p>
+
+            <br>
+
+            <button onclick="cancelAppointment()">
+                Қабылдауды болдырмау
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        let doctor =
+            localStorage.getItem("doctor");
+
+        let date =
+            localStorage.getItem("date");
+
+        let time =
+            localStorage.getItem("time");
+
+
+        if (doctor) {
+
+            document.getElementById(
+                "doctorName"
+            ).innerText = doctor;
+
+            document.getElementById(
+                "appointmentDate"
+            ).innerText =
+                "📅 " + date;
+
+            document.getElementById(
+                "appointmentTime"
+            ).innerText =
+                "⏰ " + time;
+
+        }
+
+
+        function cancelAppointment() {
+
+            localStorage.clear();
+
+            alert(
+                "Қабылдау болдырылмады"
+            );
+
+            location.reload();
+
+        }
+
+    </script>
+
+</body>
+
+</html>

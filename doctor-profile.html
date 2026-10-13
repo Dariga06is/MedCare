@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MedCare — Дәрігер профилі</title><link rel="stylesheet" href="css/style.css">
+<style>
+.profile-card{max-width:760px;margin:40px auto;background:#fff;border-radius:22px;padding:32px;box-shadow:0 10px 30px rgba(0,0,0,.08)}
+.avatar{font-size:72px;text-align:center}.info{line-height:1.8}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.actions a{padding:12px 18px;border-radius:12px;text-decoration:none;background:#c51f3b;color:#fff}.actions a.secondary{background:#eee;color:#222}
+</style>
+<link rel="stylesheet" href="css/medcare-unified.css">
+</head><body>
+<main class="profile-card"><div class="avatar" id="avatar">👩‍⚕️</div><h1 id="name"></h1><h3 id="specialty"></h3><div class="info"><p id="clinic"></p><p id="experience"></p><p>⭐ 4.9 · Пациенттердің жоғары бағасы</p><p>Дәрігер кеңес беру, тексеру және ем жоспарын құру бойынша қабылдау жүргізеді.</p></div><div class="actions"><a id="book" href="booking.html">📅 Қабылдауға жазылу</a><a class="secondary" href="doctors.html">← Дәрігерлерге қайту</a></div></main>
+<script>
+const doctors={1:{name:'Айдана Серсенова',specialty:'Учаскелік терапевт',clinic:'🏥 №5 қалалық емхана',experience:'💼 Жұмыс өтілі: 8 жыл',avatar:'👩‍⚕️'},2:{name:'Серікұлы Нұрлан',specialty:'Кардиолог',clinic:'🏥 №5 қалалық емхана',experience:'💼 Жұмыс өтілі: 12 жыл',avatar:'👨‍⚕️'},3:{name:'Ибраимова Мадина',specialty:'Офтальмолог',clinic:'🏥 MedCare клиникасы',experience:'💼 Жұмыс өтілі: 7 жыл',avatar:'👩‍⚕️'}};
+const id=new URLSearchParams(location.search).get('doctor')||'1',d=doctors[id]||doctors[1];
+name.textContent=d.name;specialty.textContent=d.specialty;clinic.textContent=d.clinic;experience.textContent=d.experience;avatar.textContent=d.avatar;book.href='booking.html?doctor='+id;
+</script></body></html>

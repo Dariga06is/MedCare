@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="kk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Қабылдауға жазылу — MedCare</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+        /* BOOKING */
+
+        .booking-title {
+            margin-bottom: 25px;
+        }
+
+        .booking-title p {
+            margin-top: 6px;
+            font-size: 13px;
+        }
+
+
+        /* STEPS */
+
+        .booking-steps {
+            display: flex;
+            align-items: center;
+
+            margin-bottom: 25px;
+
+            padding: 18px 25px;
+
+            background: white;
+
+            border: 1px solid #dfe9f0;
+            border-radius: 15px;
+        }
+
+        .booking-step {
+            flex: 1;
+
+            display: flex;
+            align-items: center;
+
+            gap: 8px;
+
+            color: #8799a8;
+
+            font-size: 12px;
+        }
+
+        .step-number {
+            width: 30px;
+            height: 30px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #edf5fa;
+
+            border-radius: 50%;
+
+            font-weight: bold;
+        }
+
+        .booking-step.active {
+            color: #1677c8;
+
+            font-weight: bold;
+        }
+
+        .booking-step.active .step-number {
+            background: #1677c8;
+
+            color: white;
+        }
+
+
+        /* LAYOUT */
+
+        .booking-grid {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1.2fr;
+
+            gap: 20px;
+
+            align-items: start;
+        }
+
+
+        /* CARD */
+
+        .booking-card {
+            padding: 25px;
+
+            background: white;
+
+            border: 1px solid #dfe9f0;
+            border-radius: 17px;
+        }
+
+        .booking-card h2 {
+            margin-bottom: 20px;
+        }
+
+
+        /* CLINIC */
+
+        .selected-clinic {
+            display: flex;
+            align-items: center;
+
+            gap: 14px;
+
+            margin-bottom: 25px;
+
+            padding: 15px;
+
+            background: #edf8ff;
+
+            border-radius: 12px;
+        }
+
+        .selected-clinic-icon {
+            width: 55px;
+            height: 55px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: white;
+
+            border-radius: 12px;
+
+            font-size: 27px;
+        }
+
+        .selected-clinic h3 {
+            margin-bottom: 4px;
+        }
+
+        .selected-clinic p {
+            font-size: 11px;
+        }
+
+
+        /* FORM */
+
+        .booking-group {
+            margin-bottom: 17px;
+        }
+
+        .booking-group label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #526b7e;
+
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .booking-group input,
+        .booking-group select,
+        .booking-group textarea {
+            width: 100%;
+
+            padding: 12px 13px;
+
+            background: #fbfdff;
+
+            border: 1px solid #d7e4ed;
+            border-radius: 9px;
+
+            outline: none;
+        }
+
+        .booking-group input:focus,
+        .booking-group select:focus,
+        .booking-group textarea:focus {
+            border-color: #1684d5;
+        }
+
+        .booking-group textarea {
+            min-height: 90px;
+
+            resize: vertical;
+        }
+
+
+        /* TIMES */
+
+        .time-list {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 8px;
+        }
+
+        .time-btn {
+            padding: 9px;
+
+            background: white;
+            color: #526b7e;
+
+            border: 1px solid #d7e4ed;
+            border-radius: 8px;
+
+            cursor: pointer;
+        }
+
+        .time-btn:hover {
+            background: #edf8ff;
+
+            color: #1677c8;
+        }
+
+        .time-btn.active {
+            background: #1677c8;
+
+            color: white;
+
+            border-color: #1677c8;
+        }
+
+
+        /* SUBMIT */
+
+        .submit-booking {
+            width: 100%;
+
+            margin-top: 5px;
+
+            padding: 13px;
+
+            background: #1677c8;
+
+            color: white;
+
+            border: none;
+            border-radius: 9px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .submit-booking:hover {
+            background: #106bb2;
+        }
+
+
+        /* MESSAGE */
+
+        .success-message {
+            display: none;
+
+            margin-top: 15px;
+
+            padding: 13px;
+
+            text-align: center;
+
+            background: #e2f7ec;
+
+            color: #21845a;
+
+            border-radius: 9px;
+
+            font-size: 12px;
+        }
+
+
+        @media (max-width: 900px) {
+
+            .booking-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .booking-steps {
+                gap: 15px;
+
+                overflow-x: auto;
+            }
+
+            .booking-step {
+                min-width: 130px;
+            }
+
+        }
+
+    </style>
+
+<link rel="stylesheet" href="css/medcare-unified.css">
+</head>
+
+
+<body>
+
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            ✚
+        </div>
+
+        <div>
+            <h2>MedCare</h2>
+            <span>Medical Platform</span>
+        </div>
+
+    </div>
+
+
+    <nav class="menu">
+
+        <a href="index.html">
+            🏠 Басты бет
+        </a>
+
+        <a href="clinic.html">
+            🏥 Клиникалар
+        </a>
+
+        <a href="doctors.html">
+            👨‍⚕️ Дәрігерлер
+        </a>
+
+
+        <a href="map.html">
+            <span>🗺️</span>
+            <span>Клиникалар картасы</span>
+        </a>
+
+        <div class="menu-title">
+            МАМАНДЫҚТАР
+        </div>
+
+
+        <a href="specialties/dentistry.html">
+            🦷 Стоматология
+        </a>
+
+        <a href="specialties/therapist.html">
+            🩺 Терапевт
+        </a>
+
+        <a href="specialties/neurologist.html">
+            🧠 Невропатолог
+        </a>
+
+        <a href="specialties/ophthalmologist.html">
+            👁 Офтальмолог
+        </a>
+
+        <a href="specialties/traumatologist.html">
+            🦴 Травматолог
+        </a>
+
+        <a href="specialties/gynecologist.html">
+            👩‍⚕️ Гинеколог
+        </a>
+
+        <a href="specialties/urologist.html">
+            👨‍⚕️ Уролог
+        </a>
+
+        <a href="specialties/cardiologist.html">
+            ❤️ Кардиолог
+        </a>
+
+
+        <div class="menu-title">
+            ЖЕКЕ КАБИНЕТ
+        </div>
+
+
+        <a href="appointments.html">
+            📅 Менің жазылуларым
+        </a>
+
+        <a href="profile.html">
+            👤 Профиль
+        </a>
+
+    </nav>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+
+    <div class="booking-title">
+
+        <span class="page-small-title">
+            MedCare / Қабылдауға жазылу
+        </span>
+
+        <h1>
+            Қабылдауға жазылу
+        </h1>
+
+        <p>
+            Дәрігерді, күнді және уақытты таңдаңыз
+        </p>
+
+    </div>
+
+
+    <!-- STEPS -->
+
+    <div class="booking-steps">
+
+        <div class="booking-step active">
+
+            <div class="step-number">
+                1
+            </div>
+
+            <span>
+                Дәрігер
+            </span>
+
+        </div>
+
+
+        <div class="booking-step">
+
+            <div class="step-number">
+                2
+            </div>
+
+            <span>
+                Күн және уақыт
+            </span>
+
+        </div>
+
+
+        <div class="booking-step">
+
+            <div class="step-number">
+                3
+            </div>
+
+            <span>
+                Ақпарат
+            </span>
+
+        </div>
+
+
+        <div class="booking-step">
+
+            <div class="step-number">
+                4
+            </div>
+
+            <span>
+                Растау
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- CONTENT -->
+
+    <div class="booking-grid">
+
+
+        <!-- LEFT -->
+
+        <section class="booking-card">
+
+            <h2>
+                Қабылдау ақпараты
+            </h2>
+
+
+            <div class="selected-clinic">
+
+                <div class="selected-clinic-icon">
+                    🏥
+                </div>
+
+                <div>
+
+                    <h3 id="clinicName">
+                        City Dent
+                    </h3>
+
+                    <p id="specialtyName">🦷 Стоматология</p>
+
+                </div>
+
+            </div>
+
+
+            <!-- DOCTOR -->
+
+            <div class="booking-group">
+
+                <label>
+                    Дәрігер
+                </label>
+
+                <select id="doctor">
+
+                    <option value="">
+                        Дәрігерді таңдаңыз
+                    </option>
+
+                    <option>
+                        Ахметова Алия — Стоматолог
+                    </option>
+
+                    <option>
+                        Нұрланова Айжан — Стоматолог
+                    </option>
+
+                    <option>
+                        Сейітов Данияр — Стоматолог
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- DATE -->
+
+            <div class="booking-group">
+
+                <label>
+                    Қабылдау күні
+                </label>
+
+                <input
+                    type="date"
+                    id="date"
+                >
+
+            </div>
+
+
+            <!-- TIME -->
+
+            <div class="booking-group">
+
+                <label>
+                    Қабылдау уақыты
+                </label>
+
+
+                <div class="time-list">
+
+                    <button
+                        type="button"
+                        class="time-btn"
+                    >
+                        09:00
+                    </button>
+
+                    <button
+                        type="button"
+                        class="time-btn"
+                    >
+                        10:00
+                    </button>
+
+                    <button
+                        type="button"
+                        class="time-btn"
+                    >
+                        11:30
+                    </button>
+
+                    <button
+                        type="button"
+                        class="time-btn"
+                    >
+                        12:00
+                    </button>
+
+                    <button
+                        type="button"
+                        class="time-btn"
+                    >
+                        14:00
+                    </button>
+
+                    <button
+                        type="button"
+                        class="time-btn"
+                    >
+                        15:30
+                    </button>
+
+                    <button
+                        type="button"
+                        class="time-btn"
+                    >
+                        17:00
+                    </button>
+
+                    <button
+                        type="button"
+                        class="time-btn"
+                    >
+                        18:30
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RIGHT -->
+
+        <section class="booking-card">
+
+            <h2>
+                Жеке ақпарат
+            </h2>
+
+
+            <div class="booking-group">
+
+                <label>
+                    Аты-жөні
+                </label>
+
+                <input
+                    type="text"
+                    id="fullName"
+                    placeholder="Аты-жөніңіз"
+                >
+
+            </div>
+
+
+            <div class="booking-group">
+
+                <label>
+                    Телефон
+                </label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    placeholder="+7 7XX XXX XX XX"
+                >
+
+            </div>
+
+
+            <div class="booking-group">
+
+                <label>
+                    E-mail
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="example@gmail.com"
+                >
+
+            </div>
+
+
+            <div class="booking-group">
+
+                <label>
+                    Комментарий
+                </label>
+
+                <textarea
+                    id="comment"
+                    placeholder="Қосымша ақпарат..."
+                ></textarea>
+
+            </div>
+
+
+            <button
+                class="submit-booking"
+                id="submitBooking"
+            >
+                Запрос жіберу
+            </button>
+
+
+            <div
+                class="success-message"
+                id="successMessage"
+            >
+                ✓ Сіздің запросыңыз жіберілді!
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<script>
+
+    /* ==========================
+       CLINIC FROM URL
+    ========================== */
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    const clinicId =
+        params.get("clinic");
+
+
+    const clinics = {
+
+        "1":
+            "Қалалық стоматологиялық емхана",
+
+        "2":
+            "City Dent",
+
+        "3":
+            "Dental Care",
+
+        "4":
+            "Smile Clinic",
+
+        "5":
+            "№1 стоматологиялық емхана",
+
+        "6":
+            "Family Dent"
+
+    };
+
+
+    if (clinics[clinicId]) {
+
+        document.getElementById(
+            "clinicName"
+        ).textContent =
+            clinics[clinicId];
+
+    }
+
+
+    /* ==========================
+       DOCTOR / SPECIALTY / PROFILE
+    ========================== */
+
+    const doctorId = params.get("doctor");
+    const specialtyParam = params.get("specialty");
+    const clinicNameParam = params.get("clinicName");
+    const doctorNameParam = params.get("doctorName");
+    if (clinicNameParam) document.getElementById("clinicName").textContent = clinicNameParam;
+    const doctorData = {
+        "1": { name: "Айдана Серсенова — Терапевт", specialty: "Терапевт", clinic: "№5 қалалық емхана" },
+        "2": { name: "Серікұлы Нұрлан — Кардиолог", specialty: "Кардиолог", clinic: "№5 қалалық емхана" },
+        "3": { name: "Ибраимова Мадина — Офтальмолог", specialty: "Офтальмолог", clinic: "№5 қалалық емхана" }
+    };
+    let currentSpecialty = specialtyParam || "Стоматология";
+    if (doctorNameParam) {
+        const select = document.getElementById("doctor");
+        select.innerHTML = `<option value="${doctorNameParam}" selected>${doctorNameParam}</option>`;
+    }
+    if (doctorData[doctorId]) {
+        const d = doctorData[doctorId];
+        currentSpecialty = d.specialty;
+        document.getElementById("clinicName").textContent = d.clinic;
+        const select = document.getElementById("doctor");
+        select.innerHTML = `<option value="${d.name}" selected>${d.name}</option>`;
+    }
+    document.getElementById("specialtyName").textContent = "🩺 " + currentSpecialty;
+
+    const savedProfile = JSON.parse(localStorage.getItem("medcareProfile") || "{}");
+    if (savedProfile.fullName) document.getElementById("fullName").value = savedProfile.fullName;
+    if (savedProfile.phone) document.getElementById("phone").value = savedProfile.phone;
+    if (savedProfile.email) document.getElementById("email").value = savedProfile.email;
+
+    /* ==========================
+       TIME
+    ========================== */
+
+    let selectedTime = "";
+
+    const timeButtons =
+        document.querySelectorAll(
+            ".time-btn"
+        );
+
+
+    timeButtons.forEach(
+        function (button) {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    timeButtons.forEach(
+                        function (item) {
+
+                            item.classList.remove(
+                                "active"
+                            );
+
+                        }
+                    );
+
+
+                    button.classList.add(
+                        "active"
+                    );
+
+
+                    selectedTime =
+                        button.textContent.trim();
+
+                }
+            );
+
+        }
+    );
+
+
+    /* ==========================
+       MINIMUM DATE
+    ========================== */
+
+    const dateInput =
+        document.getElementById("date");
+
+
+    const today =
+        new Date();
+
+
+    const year =
+        today.getFullYear();
+
+    const month =
+        String(
+            today.getMonth() + 1
+        ).padStart(2, "0");
+
+    const day =
+        String(
+            today.getDate()
+        ).padStart(2, "0");
+
+
+    dateInput.min =
+        year + "-" +
+        month + "-" +
+        day;
+
+
+    /* ==========================
+       SAVE APPOINTMENT
+    ========================== */
+
+    document.getElementById(
+        "submitBooking"
+    ).addEventListener(
+        "click",
+        function () {
+
+
+            const doctor =
+                document.getElementById(
+                    "doctor"
+                ).value;
+
+
+            const date =
+                document.getElementById(
+                    "date"
+                ).value;
+
+
+            const fullName =
+                document.getElementById(
+                    "fullName"
+                ).value.trim();
+
+
+            const phone =
+                document.getElementById(
+                    "phone"
+                ).value.trim();
+
+
+            const email =
+                document.getElementById(
+                    "email"
+                ).value.trim();
+
+
+            const comment =
+                document.getElementById(
+                    "comment"
+                ).value.trim();
+
+
+            /* CHECK */
+
+            if (
+                doctor === "" ||
+                date === "" ||
+                selectedTime === "" ||
+                fullName === "" ||
+                phone === ""
+            ) {
+
+                alert(
+                    "Барлық қажетті жолдарды толтырыңыз."
+                );
+
+                return;
+
+            }
+
+
+            /* OBJECT */
+
+            const appointment = {
+
+                id: Date.now(),
+
+                clinic:
+                    document.getElementById(
+                        "clinicName"
+                    ).textContent,
+
+                specialty:
+                    currentSpecialty,
+
+                doctor: doctor,
+
+                date: date,
+
+                time: selectedTime,
+
+                fullName: fullName,
+
+                phone: phone,
+
+                email: email,
+
+                comment: comment,
+
+                status:
+                    "Күтуде"
+
+            };
+
+
+            /* GET OLD DATA */
+
+            const oldAppointments =
+                JSON.parse(
+                    localStorage.getItem(
+                        "medcareAppointments"
+                    )
+                ) || [];
+
+
+            /* ADD */
+
+            oldAppointments.push(
+                appointment
+            );
+
+
+            /* SAVE */
+
+            localStorage.setItem(
+                "medcareAppointments",
+                JSON.stringify(
+                    oldAppointments
+                )
+            );
+
+
+            /* MESSAGE */
+
+            document.getElementById(
+                "successMessage"
+            ).style.display =
+                "block";
+
+
+            /* BUTTON */
+
+            this.textContent =
+                "✓ Запрос жіберілді";
+
+            this.disabled =
+                true;
+
+
+            /* GO TO APPOINTMENTS */
+
+            setTimeout(
+                function () {
+
+                    window.location.href =
+                        "appointments.html";
+
+                },
+                1500
+            );
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

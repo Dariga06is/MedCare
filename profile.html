@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Профиль — MedCare</title><link rel="stylesheet" href="css/style.css">
+<style>
+.profile-header{margin-bottom:24px}.profile-header p{color:#7c91a2;font-size:13px;margin-top:7px}.profile-grid{display:grid;grid-template-columns:280px 1fr;gap:22px}.profile-card{background:#fff;border:1px solid #dfe9f0;border-radius:18px;padding:24px}.profile-summary{text-align:center}.profile-avatar{width:92px;height:92px;margin:0 auto 16px;border-radius:24px;background:#e8f4ff;color:#1677c8;display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:700}.profile-summary h2{font-size:18px;color:#203b52}.profile-summary p{font-size:12px;color:#8497a6;margin-top:6px}.profile-stat{margin-top:22px;padding-top:18px;border-top:1px solid #edf2f5;display:flex;justify-content:space-around}.profile-stat strong{display:block;color:#1677c8;font-size:18px}.profile-stat span{font-size:10px;color:#8a9ba8}.profile-card h2{font-size:17px;margin-bottom:20px;color:#203b52}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field.full{grid-column:1/-1}.field label{display:block;font-size:11px;font-weight:700;color:#64748b;margin-bottom:7px}.field input{width:100%;padding:12px 13px;border:1px solid #dce7ef;border-radius:9px;outline:none;font-size:13px}.field input:focus{border-color:#1677c8}.save-btn{margin-top:20px;padding:12px 20px;border:0;border-radius:9px;background:#1677c8;color:#fff;font-weight:700;cursor:pointer}.saved{display:none;margin-top:14px;padding:11px;border-radius:9px;background:#e6f7ef;color:#19734e;font-size:12px}@media(max-width:850px){.profile-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}}@media(max-width:650px){.main{margin-left:0;padding:22px}.sidebar{display:none}}
+</style><link rel="stylesheet" href="css/medcare-unified.css">
+</head><body>
+<aside class="sidebar"><div class="logo"><div class="logo-icon">✚</div><div><h2>MedCare</h2><span>Medical Platform</span></div></div>
+<nav class="menu">
+<a href="map.html">
+            <span>🗺️</span>
+            <span>Клиникалар картасы</span>
+        </a>
+
+        <a href="index.html"><span>🏠</span><span>Басты бет</span></a><div class="menu-title">ҚЫЗМЕТТЕР</div><a href="clinic.html"><span>🏥</span><span>Клиникалар</span></a><a href="doctors.html"><span>👨‍⚕️</span><span>Дәрігерлер</span></a><a href="medicines.html"><span>💊</span><span>Дәрілер</span></a><a href="appointments.html"><span>📅</span><span>Менің жазылуларым</span></a><a href="profile.html" class="active"><span>👤</span><span>Профиль</span></a><div class="menu-title">КӨМЕК</div><a href="ai-assistant.html"><span>🤖</span><span>MedCare AI</span></a><a href="support.html"><span>🎧</span><span>Техникалық қолдау</span></a></nav></aside>
+<main class="main"><div class="profile-header"><span class="page-small-title">ЖЕКЕ КАБИНЕТ</span><h1>Менің профилім</h1><p>Жеке мәліметтеріңізді жаңартыңыз. Бұл ақпарат қабылдауға жазылған кезде автоматты түрде қолданылады.</p></div>
+<div class="profile-grid"><section class="profile-card profile-summary"><div class="profile-avatar" id="avatar">M</div><h2 id="profileName">MedCare қолданушысы</h2><p id="profileEmail">Профильді толтырыңыз</p><div class="profile-stat"><div><strong id="appointmentCount">0</strong><span>Жазылу</span></div><div><strong>24/7</strong><span>Қолдау</span></div></div></section>
+<section class="profile-card"><h2>Жеке ақпарат</h2><div class="form-grid"><div class="field full"><label>Аты-жөні</label><input id="fullName" type="text" placeholder="Аты-жөніңіз"></div><div class="field"><label>Телефон</label><input id="phone" type="tel" placeholder="+7 7XX XXX XX XX"></div><div class="field"><label>E-mail</label><input id="email" type="email" placeholder="example@gmail.com"></div><div class="field"><label>Туған күні</label><input id="birthDate" type="date"></div><div class="field"><label>Қала</label><input id="city" type="text" placeholder="Қала"></div></div><button class="save-btn" id="saveProfile">💾 Өзгерістерді сақтау</button><div class="saved" id="saved">✓ Профиль сәтті сақталды</div></section></div></main>
+<script>
+const ids=['fullName','phone','email','birthDate','city'];
+function loadProfile(){const p=JSON.parse(localStorage.getItem('medcareProfile')||'{}');ids.forEach(id=>document.getElementById(id).value=p[id]||'');updateSummary(p);const a=JSON.parse(localStorage.getItem('medcareAppointments')||'[]');document.getElementById('appointmentCount').textContent=a.length;}
+function updateSummary(p){const name=p.fullName||'MedCare қолданушысы';document.getElementById('profileName').textContent=name;document.getElementById('profileEmail').textContent=p.email||'Профильді толтырыңыз';document.getElementById('avatar').textContent=name.trim().charAt(0).toUpperCase()||'M';}
+document.getElementById('saveProfile').onclick=()=>{const p={};ids.forEach(id=>p[id]=document.getElementById(id).value.trim());localStorage.setItem('medcareProfile',JSON.stringify(p));updateSummary(p);const s=document.getElementById('saved');s.style.display='block';setTimeout(()=>s.style.display='none',2500)};loadProfile();
+</script></body></html>

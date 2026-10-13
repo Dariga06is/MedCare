@@ -1,0 +1,603 @@
+
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MedCare — Менің дәрілерім</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #26364a;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: white;
+    padding: 25px 15px;
+    border-right: 1px solid #e5eaf0;
+    overflow-y: auto;
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 35px;
+    color: #19354c;
+}
+
+.logo span {
+    color: #00a79d;
+}
+
+.menu {
+    padding: 0;
+    list-style: none;
+}
+
+.menu li {
+    margin-bottom: 8px;
+}
+
+.menu a {
+    display: block;
+    padding: 14px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #586779;
+}
+
+.menu a:hover,
+.menu a.active {
+    background: #e2f7f4;
+    color: #00998f;
+}
+
+/* MAIN */
+
+.main {
+    margin-left: 250px;
+    padding: 35px;
+}
+
+h1 {
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #8290a0;
+}
+
+/* STATISTICS */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 15px #00000008;
+}
+
+.stat-card p {
+    color: #7b8899;
+}
+
+.stat-card h2 {
+    font-size: 32px;
+    margin-bottom: 0;
+}
+
+/* SECTION */
+
+.section-title {
+    margin-top: 35px;
+    margin-bottom: 20px;
+}
+
+.medicine-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.medicine-card {
+    background: white;
+    padding: 23px;
+    border-radius: 18px;
+    border: 1px solid #e8edf2;
+    box-shadow: 0 4px 15px #00000008;
+}
+
+.medicine-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.medicine-icon {
+    font-size: 28px;
+    padding: 15px;
+    background: #e4f8f4;
+    border-radius: 14px;
+}
+
+.medicine-header h3 {
+    margin: 0;
+}
+
+.medicine-header p {
+    color: #8190a1;
+    margin-bottom: 0;
+}
+
+.info {
+    margin-top: 20px;
+    line-height: 1.9;
+    color: #617185;
+}
+
+.info strong {
+    color: #27374a;
+}
+
+.status {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 8px 13px;
+    border-radius: 20px;
+    background: #fff2d8;
+    color: #a97500;
+    font-size: 13px;
+}
+
+.status.done {
+    background: #dcf8e9;
+    color: #16854d;
+}
+
+.take-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px;
+    border: none;
+    border-radius: 11px;
+    background: #00a79d;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.take-btn:hover {
+    background: #008e86;
+}
+
+.take-btn:disabled {
+    background: #d5eee6;
+    color: #277b5b;
+    cursor: default;
+}
+
+/* DOCTOR */
+
+.doctor-box {
+    margin-top: 30px;
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    border: 1px solid #e8edf2;
+}
+
+.doctor-box h3 {
+    margin-top: 0;
+}
+
+.doctor-box p {
+    color: #65768a;
+    line-height: 1.8;
+}
+
+/* NOTICE */
+
+.notice {
+    margin-top: 25px;
+    background: #e9f7ff;
+    padding: 18px;
+    border-radius: 12px;
+    color: #42677b;
+    line-height: 1.7;
+}
+
+.empty {
+    background: white;
+    border-radius: 14px;
+    padding: 35px;
+    text-align: center;
+    color: #8290a0;
+}
+
+@media(max-width: 850px) {
+    .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+    }
+
+    .main {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+<link rel="stylesheet" href="css/medcare-unified.css">
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+        🏥 <span>Med</span>Care
+    </div>
+
+    <ul class="menu">
+        <li>
+            <a href="index.html">🏠 Басты бет</a>
+        </li>
+
+        <li>
+            <a href="doctors.html">👨‍⚕️ Дәрігерлер</a>
+        </li>
+
+        <li>
+            <a href="appointment.html">
+                📅 Қабылдауға жазылу
+            </a>
+        </li>
+
+        <li>
+            <a href="appointments.html">
+                📋 Менің жазылуларым
+            </a>
+        </li>
+
+        <li>
+            <a href="medicines.html" class="active">
+                💊 Дәрілер
+            </a>
+        </li>
+
+        <li>
+            <a href="health.html">❤️ Денсаулық</a>
+        </li>
+
+        <li>
+            <a href="profile.html">⚙️ Профиль</a>
+        </li>
+    </ul>
+
+</aside>
+
+<!-- MAIN -->
+
+<main class="main">
+
+    <h1>💊 Менің дәрілерім</h1>
+
+    <p class="subtitle">
+        Дәрігер тағайындаған дәрілер және қабылдау кестесі
+    </p>
+
+    <!-- STATISTICS -->
+
+    <div class="stats">
+
+        <div class="stat-card">
+            <p>💊 Тағайындалған дәрілер</p>
+            <h2 id="totalCount">0</h2>
+        </div>
+
+        <div class="stat-card">
+            <p>✅ Бүгін қабылданды</p>
+            <h2 id="takenCount">0</h2>
+        </div>
+
+        <div class="stat-card">
+            <p>⏳ Қабылданбаған</p>
+            <h2 id="pendingCount">0</h2>
+        </div>
+
+    </div>
+
+    <!-- MEDICINES -->
+
+    <h2 class="section-title">
+        📋 Дәрігер тағайындаулары
+    </h2>
+
+    <div class="medicine-grid" id="medicineList">
+    </div>
+
+    <!-- DOCTOR -->
+
+    <div class="doctor-box">
+
+        <h3>👨‍⚕️ Емдеуші дәрігер</h3>
+
+        <p id="doctorInfo">
+            Дәрігер туралы ақпарат жүктелуде...
+        </p>
+
+    </div>
+
+    <!-- NOTICE -->
+
+    <div class="notice">
+        ℹ️ Дәрілер тек дәрігердің тағайындауы бойынша
+        қабылдануы тиіс. Дозаны немесе қабылдау
+        уақытын өз бетіңізше өзгертпеңіз.
+        «Қабылдадым» батырмасы қабылдауды
+        тіркеуге арналған.
+    </div>
+
+</main>
+
+<script>
+
+/*
+    ДЕМОНСТРАЦИЯЛЫҚ МӘЛІМЕТТЕР
+
+    Бұл нақты медициналық тағайындаулар емес.
+    Кейін серверден келетін мәліметтермен
+    алмастырылады.
+*/
+
+const prescriptions = [
+    {
+        id: "demo-1",
+        name: "Парацетамол",
+        dose: "500 мг",
+        time: "08:00",
+        frequency: "Күніне 1 рет",
+        duration: "Дәрігер анықтайды",
+        instruction: "Дәрігер нұсқаулығына сәйкес",
+        doctor: "А. Ахметова",
+        specialty: "Терапевт",
+        clinic: "MedCare клиникасы"
+    },
+    {
+        id: "demo-2",
+        name: "Дәрумен D",
+        dose: "1000 IU",
+        time: "20:00",
+        frequency: "Күніне 1 рет",
+        duration: "Дәрігер анықтайды",
+        instruction: "Дәрігер нұсқаулығына сәйкес",
+        doctor: "А. Ахметова",
+        specialty: "Терапевт",
+        clinic: "MedCare клиникасы"
+    }
+];
+
+const STORAGE_KEY = "medcare_demo_taken_v1";
+
+let takenRecords = {};
+
+function getToday() {
+    const date = new Date();
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+}
+
+function loadRecords() {
+    try {
+        takenRecords =
+            JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    } catch {
+        takenRecords = {};
+    }
+}
+
+function saveRecords() {
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(takenRecords)
+    );
+}
+
+function isTaken(id) {
+    const today = getToday();
+
+    return Array.isArray(takenRecords[today]) &&
+           takenRecords[today].includes(id);
+}
+
+function takeMedicine(id) {
+    const medicine = prescriptions.find(m => m.id === id);
+
+    if (!medicine || isTaken(id)) return;
+
+    const confirmed = confirm(
+        medicine.name + " дәрісін қабылдадыңыз ба?"
+    );
+
+    if (!confirmed) return;
+
+    const today = getToday();
+
+    if (!Array.isArray(takenRecords[today])) {
+        takenRecords[today] = [];
+    }
+
+    takenRecords[today].push(id);
+
+    saveRecords();
+    renderMedicines();
+}
+
+function createElement(tag, className, text) {
+    const element = document.createElement(tag);
+
+    if (className) {
+        element.className = className;
+    }
+
+    if (text !== undefined) {
+        element.textContent = text;
+    }
+
+    return element;
+}
+
+function addInfo(parent, label, value) {
+    const line = createElement("div");
+    const strong = createElement("strong", "", label + ": ");
+
+    line.appendChild(strong);
+    line.appendChild(document.createTextNode(value));
+
+    parent.appendChild(line);
+}
+
+function renderMedicines() {
+
+    const list = document.getElementById("medicineList");
+    list.replaceChildren();
+
+    const takenCount = prescriptions.filter(
+        medicine => isTaken(medicine.id)
+    ).length;
+
+    document.getElementById("totalCount").textContent =
+        prescriptions.length;
+
+    document.getElementById("takenCount").textContent =
+        takenCount;
+
+    document.getElementById("pendingCount").textContent =
+        prescriptions.length - takenCount;
+
+    if (prescriptions.length === 0) {
+        list.appendChild(createElement(
+            "div",
+            "empty",
+            "Әзірге дәрігер тағайындаған дәрілер жоқ."
+        ));
+        return;
+    }
+
+    const sorted = [...prescriptions].sort(
+        (a, b) => a.time.localeCompare(b.time)
+    );
+
+    sorted.forEach(medicine => {
+
+        const done = isTaken(medicine.id);
+
+        const card = createElement("div", "medicine-card");
+
+        const header = createElement("div", "medicine-header");
+        const icon = createElement("div", "medicine-icon", "💊");
+        const titleBox = createElement("div");
+
+        titleBox.appendChild(
+            createElement("h3", "", medicine.name)
+        );
+
+        titleBox.appendChild(
+            createElement("p", "", medicine.dose)
+        );
+
+        header.append(icon, titleBox);
+
+        const info = createElement("div", "info");
+
+        addInfo(info, "⏰ Уақыты", medicine.time);
+        addInfo(info, "📅 Жиілігі", medicine.frequency);
+        addInfo(info, "🗓️ Емдеу ұзақтығы", medicine.duration);
+        addInfo(info, "📝 Нұсқаулық", medicine.instruction);
+        addInfo(info, "👨‍⚕️ Дәрігер", medicine.doctor);
+
+        const status = createElement(
+            "span",
+            done ? "status done" : "status",
+            done ? "✓ Бүгін қабылданды" : "⏳ Қабылданбаған"
+        );
+
+        const button = createElement(
+            "button",
+            "take-btn",
+            done ? "✓ Қабылданды" : "✓ Қабылдадым"
+        );
+
+        button.disabled = done;
+
+        button.addEventListener("click", () => {
+            takeMedicine(medicine.id);
+        });
+
+        card.append(header, info, status, button);
+        list.appendChild(card);
+    });
+}
+
+function renderDoctor() {
+    const box = document.getElementById("doctorInfo");
+
+    if (prescriptions.length === 0) {
+        box.textContent = "Емдеуші дәрігер көрсетілмеген.";
+        return;
+    }
+
+    const medicine = prescriptions[0];
+
+    box.replaceChildren();
+
+    addInfo(box, "Дәрігер", medicine.doctor);
+    addInfo(box, "Мамандығы", medicine.specialty);
+    addInfo(box, "Клиника", medicine.clinic);
+}
+
+loadRecords();
+renderMedicines();
+renderDoctor();
+
+/* Күн ауысқанда статистиканы жаңарту */
+setInterval(() => {
+    renderMedicines();
+}, 60000);
+
+</script>
+
+</body>
+</html>

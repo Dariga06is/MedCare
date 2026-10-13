@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="kk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Менің жазылуларым — MedCare</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+        /* ===============================
+           PAGE HEADER
+        =============================== */
+
+        .appointments-header {
+            margin-bottom: 25px;
+        }
+
+        .appointments-header h1 {
+            margin: 5px 0;
+        }
+
+        .appointments-header p {
+            color: #7c91a2;
+            font-size: 13px;
+        }
+
+
+        /* ===============================
+           FILTERS
+        =============================== */
+
+        .appointment-filters {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+
+            margin-bottom: 25px;
+        }
+
+        .appointment-filter {
+            padding: 9px 17px;
+
+            background: white;
+            color: #657b8e;
+
+            border: 1px solid #dce7ef;
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            cursor: pointer;
+        }
+
+        .appointment-filter.active {
+            background: #1677c8;
+            color: white;
+
+            border-color: #1677c8;
+        }
+
+
+        /* ===============================
+           LIST
+        =============================== */
+
+        .appointments-list {
+            display: flex;
+            flex-direction: column;
+
+            gap: 15px;
+        }
+
+
+        /* ===============================
+           APPOINTMENT CARD
+        =============================== */
+
+        .appointment-card {
+            display: flex;
+            align-items: center;
+
+            gap: 18px;
+
+            padding: 20px;
+
+            background: white;
+
+            border: 1px solid #dfe9f0;
+            border-radius: 16px;
+
+            transition: 0.2s;
+        }
+
+        .appointment-card:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 7px 20px rgba(40, 90, 120, 0.08);
+        }
+
+
+        /* ICON */
+
+        .appointment-icon {
+            width: 58px;
+            height: 58px;
+
+            min-width: 58px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #e9f6ff;
+
+            border-radius: 13px;
+
+            font-size: 27px;
+        }
+
+
+        /* INFORMATION */
+
+        .appointment-info {
+            flex: 1;
+        }
+
+        .appointment-top {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 5px;
+        }
+
+        .appointment-top h3 {
+            color: #203b52;
+            font-size: 15px;
+        }
+
+        .clinic-name {
+            margin-bottom: 9px;
+
+            color: #1684d5;
+
+            font-size: 11px;
+        }
+
+        .doctor-name {
+            margin-bottom: 8px;
+
+            color: #526b7e;
+
+            font-size: 12px;
+        }
+
+        .appointment-meta {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 20px;
+
+            color: #75899a;
+
+            font-size: 11px;
+        }
+
+
+        /* ===============================
+           STATUS
+        =============================== */
+
+        .appointment-status {
+            padding: 6px 11px;
+
+            border-radius: 20px;
+
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .status-waiting {
+            background: #fff3d8;
+            color: #b57a00;
+        }
+
+        .status-done {
+            background: #e0f6eb;
+            color: #19805a;
+        }
+
+        .status-cancelled {
+            background: #ffe5e8;
+            color: #b94b56;
+        }
+
+
+        /* ===============================
+           ACTIONS
+        =============================== */
+
+        .appointment-actions {
+            display: flex;
+            flex-direction: column;
+
+            gap: 8px;
+
+            min-width: 120px;
+        }
+
+        .details-btn,
+        .cancel-btn {
+            padding: 9px 13px;
+
+            border-radius: 8px;
+
+            text-align: center;
+
+            font-size: 11px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .details-btn {
+            background: #edf8ff;
+            color: #1677c8;
+
+            border: none;
+        }
+
+        .cancel-btn {
+            background: white;
+            color: #d0545e;
+
+            border: 1px solid #f0cdd1;
+        }
+
+        .cancel-btn:hover {
+            background: #fff0f1;
+        }
+
+
+        /* ===============================
+           EMPTY
+        =============================== */
+
+        .empty-appointments {
+            display: none;
+
+            padding: 60px 20px;
+
+            text-align: center;
+
+            background: white;
+
+            border: 1px dashed #ccdde8;
+            border-radius: 17px;
+        }
+
+        .empty-icon {
+            margin-bottom: 15px;
+
+            font-size: 45px;
+        }
+
+        .empty-appointments h2 {
+            margin-bottom: 7px;
+        }
+
+        .empty-appointments p {
+            margin-bottom: 20px;
+
+            font-size: 12px;
+        }
+
+        .find-doctor-btn {
+            display: inline-block;
+
+            padding: 11px 20px;
+
+            background: #1677c8;
+            color: white;
+
+            border-radius: 9px;
+
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+
+        /* ===============================
+           MODAL
+        =============================== */
+
+        .modal {
+            display: none;
+
+            position: fixed;
+
+            left: 0;
+            top: 0;
+
+            width: 100%;
+            height: 100%;
+
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(18, 42, 60, 0.45);
+
+            z-index: 5000;
+        }
+
+        .modal.open {
+            display: flex;
+        }
+
+        .modal-box {
+            width: 90%;
+            max-width: 480px;
+
+            padding: 27px;
+
+            background: white;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-box h2 {
+            margin-bottom: 20px;
+        }
+
+        .modal-row {
+            padding: 10px 0;
+
+            border-bottom: 1px solid #edf2f5;
+        }
+
+        .modal-row span {
+            display: block;
+
+            margin-bottom: 3px;
+
+            color: #8a9ba8;
+
+            font-size: 10px;
+        }
+
+        .modal-row strong {
+            color: #344e63;
+
+            font-size: 13px;
+        }
+
+        .close-modal {
+            width: 100%;
+
+            margin-top: 20px;
+
+            padding: 11px;
+
+            background: #1677c8;
+            color: white;
+
+            border: none;
+            border-radius: 8px;
+
+            cursor: pointer;
+        }
+
+
+        /* ===============================
+           MOBILE
+        =============================== */
+
+        @media (max-width: 750px) {
+
+            .appointment-card {
+                align-items: flex-start;
+
+                flex-wrap: wrap;
+            }
+
+            .appointment-actions {
+                width: 100%;
+
+                flex-direction: row;
+            }
+
+            .appointment-actions button {
+                flex: 1;
+            }
+
+        }
+
+    </style>
+
+<link rel="stylesheet" href="css/medcare-unified.css">
+</head>
+
+
+<body>
+
+
+<!-- ===============================
+     SIDEBAR
+=============================== -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">✚</div>
+
+        <div>
+            <h2>MedCare</h2>
+            <span>Medical Platform</span>
+        </div>
+
+    </div>
+
+
+    <nav class="menu">
+
+        <a href="index.html">
+            🏠 Басты бет
+        </a>
+
+        <a href="clinic.html">
+            🏥 Клиникалар
+        </a>
+
+        <a href="doctors.html">
+            👨‍⚕️ Дәрігерлер
+        </a>
+
+
+        <a href="map.html">
+            <span>🗺️</span>
+            <span>Клиникалар картасы</span>
+        </a>
+
+        <div class="menu-title">
+            МАМАНДЫҚТАР
+        </div>
+
+        <a href="specialties/dentistry.html">
+            🦷 Стоматология
+        </a>
+
+        <a href="specialties/therapist.html">
+            🩺 Терапевт
+        </a>
+
+        <a href="specialties/neurologist.html">
+            🧠 Невропатолог
+        </a>
+
+        <a href="specialties/ophthalmologist.html">
+            👁 Офтальмолог
+        </a>
+
+        <a href="specialties/traumatologist.html">
+            🦴 Травматолог
+        </a>
+
+        <a href="specialties/gynecologist.html">
+            👩‍⚕️ Гинеколог
+        </a>
+
+        <a href="specialties/urologist.html">
+            👨‍⚕️ Уролог
+        </a>
+
+        <a href="specialties/cardiologist.html">
+            ❤️ Кардиолог
+        </a>
+
+
+        <div class="menu-title">
+            ЖЕКЕ КАБИНЕТ
+        </div>
+
+        <a href="appointments.html" class="active">
+            📅 Менің жазылуларым
+        </a>
+
+        <a href="profile.html">
+            👤 Профиль
+        </a>
+
+    </nav>
+
+</aside>
+
+
+<!-- ===============================
+     MAIN
+=============================== -->
+
+<main class="main">
+
+
+    <!-- HEADER -->
+
+    <div class="appointments-header">
+
+        <span class="page-small-title">
+            Жеке кабинет
+        </span>
+
+        <h1>
+            Менің жазылуларым
+        </h1>
+
+        <p>
+            Қабылдауға жіберілген запросдарды басқарыңыз
+        </p>
+
+    </div>
+
+
+    <!-- FILTERS -->
+
+    <div class="appointment-filters">
+
+        <button
+            class="appointment-filter active"
+            data-filter="all"
+        >
+            Барлығы
+        </button>
+
+        <button
+            class="appointment-filter"
+            data-filter="Күтуде"
+        >
+            Күтуде
+        </button>
+
+        <button
+            class="appointment-filter"
+            data-filter="Аяқталды"
+        >
+            Аяқталған
+        </button>
+
+        <button
+            class="appointment-filter"
+            data-filter="Бас тартылды"
+        >
+            Бас тартылған
+        </button>
+
+    </div>
+
+
+    <!-- LIST -->
+
+    <div
+        class="appointments-list"
+        id="appointmentsList"
+    ></div>
+
+
+    <!-- EMPTY -->
+
+    <div
+        class="empty-appointments"
+        id="emptyAppointments"
+    >
+
+        <div class="empty-icon">
+            📅
+        </div>
+
+        <h2>
+            Жазылулар жоқ
+        </h2>
+
+        <p>
+            Сіз әлі қабылдауға жазылған жоқсыз
+        </p>
+
+        <a
+            href="specialties/dentistry.html"
+            class="find-doctor-btn"
+        >
+            Дәрігер табу
+        </a>
+
+    </div>
+
+
+</main>
+
+
+<!-- ===============================
+     DETAILS MODAL
+=============================== -->
+
+<div
+    class="modal"
+    id="detailsModal"
+>
+
+    <div class="modal-box">
+
+        <h2>
+            Қабылдау ақпараты
+        </h2>
+
+
+        <div class="modal-row">
+
+            <span>Мамандық</span>
+
+            <strong id="modalSpecialty"></strong>
+
+        </div>
+
+
+        <div class="modal-row">
+
+            <span>Клиника</span>
+
+            <strong id="modalClinic"></strong>
+
+        </div>
+
+
+        <div class="modal-row">
+
+            <span>Дәрігер</span>
+
+            <strong id="modalDoctor"></strong>
+
+        </div>
+
+
+        <div class="modal-row">
+
+            <span>Күн</span>
+
+            <strong id="modalDate"></strong>
+
+        </div>
+
+
+        <div class="modal-row">
+
+            <span>Уақыт</span>
+
+            <strong id="modalTime"></strong>
+
+        </div>
+
+
+        <div class="modal-row">
+
+            <span>Статус</span>
+
+            <strong id="modalStatus"></strong>
+
+        </div>
+
+
+        <button
+            class="close-modal"
+            id="closeModal"
+        >
+            Жабу
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ===============================
+     JAVASCRIPT
+=============================== -->
+
+<script>
+
+    const list =
+        document.getElementById(
+            "appointmentsList"
+        );
+
+    const empty =
+        document.getElementById(
+            "emptyAppointments"
+        );
+
+    const filterButtons =
+        document.querySelectorAll(
+            ".appointment-filter"
+        );
+
+    let currentFilter = "all";
+
+
+    /* ===============================
+       GET DATA
+    =============================== */
+
+    function getAppointments() {
+
+        return JSON.parse(
+            localStorage.getItem(
+                "medcareAppointments"
+            )
+        ) || [];
+
+    }
+
+
+    /* ===============================
+       STATUS CLASS
+    =============================== */
+
+    function getStatusClass(status) {
+
+        if (status === "Аяқталды") {
+            return "status-done";
+        }
+
+        if (status === "Бас тартылды") {
+            return "status-cancelled";
+        }
+
+        return "status-waiting";
+
+    }
+
+
+    /* ===============================
+       RENDER
+    =============================== */
+
+    function renderAppointments() {
+
+        const appointments =
+            getAppointments();
+
+
+        const filtered =
+            appointments.filter(
+                function (appointment) {
+
+                    if (
+                        currentFilter === "all"
+                    ) {
+                        return true;
+                    }
+
+                    return (
+                        appointment.status ===
+                        currentFilter
+                    );
+
+                }
+            );
+
+
+        list.innerHTML = "";
+
+
+        if (filtered.length === 0) {
+
+            empty.style.display =
+                "block";
+
+            return;
+
+        }
+
+
+        empty.style.display =
+            "none";
+
+
+        filtered
+            .slice()
+            .reverse()
+            .forEach(
+                function (appointment) {
+
+
+                    const card =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    card.className =
+                        "appointment-card";
+
+
+                    card.innerHTML = `
+
+                        <div class="appointment-icon">
+                            🦷
+                        </div>
+
+
+                        <div class="appointment-info">
+
+                            <div class="appointment-top">
+
+                                <h3>
+                                    ${appointment.specialty}
+                                </h3>
+
+                                <span class="
+                                    appointment-status
+                                    ${getStatusClass(
+                                        appointment.status
+                                    )}
+                                ">
+                                    ${appointment.status}
+                                </span>
+
+                            </div>
+
+
+                            <div class="clinic-name">
+                                ${appointment.clinic}
+                            </div>
+
+
+                            <div class="doctor-name">
+                                👩‍⚕️ ${appointment.doctor}
+                            </div>
+
+
+                            <div class="appointment-meta">
+
+                                <span>
+                                    📅 ${appointment.date}
+                                </span>
+
+                                <span>
+                                    🕐 ${appointment.time}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="appointment-actions">
+
+                            <button
+                                class="details-btn"
+                                onclick="showDetails(
+                                    ${appointment.id}
+                                )"
+                            >
+                                Толығырақ
+                            </button>
+
+
+                            ${
+                                appointment.status ===
+                                "Күтуде"
+
+                                ?
+
+                                `
+                                <button
+                                    class="cancel-btn"
+                                    onclick="cancelAppointment(
+                                        ${appointment.id}
+                                    )"
+                                >
+                                    Бас тарту
+                                </button>
+                                `
+
+                                :
+
+                                ""
+                            }
+
+                        </div>
+
+                    `;
+
+
+                    list.appendChild(card);
+
+                }
+            );
+
+    }
+
+
+    /* ===============================
+       FILTER
+    =============================== */
+
+    filterButtons.forEach(
+        function (button) {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+
+                    filterButtons.forEach(
+                        function (item) {
+
+                            item.classList.remove(
+                                "active"
+                            );
+
+                        }
+                    );
+
+
+                    button.classList.add(
+                        "active"
+                    );
+
+
+                    currentFilter =
+                        button.dataset.filter;
+
+
+                    renderAppointments();
+
+                }
+            );
+
+        }
+    );
+
+
+    /* ===============================
+       CANCEL
+    =============================== */
+
+    function cancelAppointment(id) {
+
+        const answer =
+            confirm(
+                "Қабылдаудан бас тартқыңыз келе ме?"
+            );
+
+
+        if (!answer) {
+            return;
+        }
+
+
+        const appointments =
+            getAppointments();
+
+
+        const appointment =
+            appointments.find(
+                function (item) {
+
+                    return item.id === id;
+
+                }
+            );
+
+
+        if (appointment) {
+
+            appointment.status =
+                "Бас тартылды";
+
+        }
+
+
+        localStorage.setItem(
+            "medcareAppointments",
+            JSON.stringify(
+                appointments
+            )
+        );
+
+
+        renderAppointments();
+
+    }
+
+
+    /* ===============================
+       DETAILS
+    =============================== */
+
+    const modal =
+        document.getElementById(
+            "detailsModal"
+        );
+
+
+    function showDetails(id) {
+
+        const appointments =
+            getAppointments();
+
+
+        const appointment =
+            appointments.find(
+                function (item) {
+
+                    return item.id === id;
+
+                }
+            );
+
+
+        if (!appointment) {
+            return;
+        }
+
+
+        document.getElementById(
+            "modalSpecialty"
+        ).textContent =
+            appointment.specialty;
+
+
+        document.getElementById(
+            "modalClinic"
+        ).textContent =
+            appointment.clinic;
+
+
+        document.getElementById(
+            "modalDoctor"
+        ).textContent =
+            appointment.doctor;
+
+
+        document.getElementById(
+            "modalDate"
+        ).textContent =
+            appointment.date;
+
+
+        document.getElementById(
+            "modalTime"
+        ).textContent =
+            appointment.time;
+
+
+        document.getElementById(
+            "modalStatus"
+        ).textContent =
+            appointment.status;
+
+
+        modal.classList.add(
+            "open"
+        );
+
+    }
+
+
+    /* CLOSE MODAL */
+
+    document.getElementById(
+        "closeModal"
+    ).addEventListener(
+        "click",
+        function () {
+
+            modal.classList.remove(
+                "open"
+            );
+
+        }
+    );
+
+
+    modal.addEventListener(
+        "click",
+        function (event) {
+
+            if (event.target === modal) {
+
+                modal.classList.remove(
+                    "open"
+                );
+
+            }
+
+        }
+    );
+
+
+    /* FIRST LOAD */
+        /* ===============================
+       FIRST LOAD
+    =============================== */
+
+    renderAppointments();
+
+</script>
+
+</body>
+</html>

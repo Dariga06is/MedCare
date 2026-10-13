@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="kk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MedCare AI — Көмекші</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+        /* =====================================
+           PAGE
+        ===================================== */
+
+        .ai-page {
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+
+        .ai-page-header {
+            margin-bottom: 22px;
+        }
+
+        .ai-page-header h1 {
+            margin: 5px 0;
+        }
+
+        .ai-page-header p {
+            font-size: 13px;
+        }
+
+
+        /* =====================================
+           AI BANNER
+        ===================================== */
+
+        .ai-banner {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+
+            margin-bottom: 20px;
+            padding: 24px;
+
+            background: linear-gradient(
+                120deg,
+                #ffffff,
+                #e4f5ff
+            );
+
+            border: 1px solid #d5e9f5;
+            border-radius: 18px;
+        }
+
+        .ai-logo {
+            width: 65px;
+            height: 65px;
+
+            min-width: 65px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #1677c8;
+            color: white;
+
+            border-radius: 17px;
+
+            font-size: 32px;
+
+            box-shadow:
+                0 8px 20px rgba(22,119,200,0.18);
+        }
+
+        .ai-banner-text {
+            flex: 1;
+        }
+
+        .ai-banner-text span {
+            color: #1684d5;
+
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .ai-banner-text h2 {
+            margin: 5px 0;
+
+            font-size: 20px;
+        }
+
+        .ai-banner-text p {
+            max-width: 650px;
+
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .ai-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+
+            color: #23855c;
+
+            font-size: 10px;
+        }
+
+        .ai-status-dot {
+            width: 8px;
+            height: 8px;
+
+            background: #29b978;
+
+            border-radius: 50%;
+        }
+
+
+        /* =====================================
+           CHAT
+        ===================================== */
+
+        .ai-chat {
+            overflow: hidden;
+
+            background: white;
+
+            border: 1px solid #dfe9f0;
+            border-radius: 18px;
+        }
+
+
+        /* =====================================
+           QUICK ACTIONS
+        ===================================== */
+
+        .quick-area {
+            padding: 20px 22px 0;
+        }
+
+        .quick-area h3 {
+            margin-bottom: 12px;
+
+            font-size: 12px;
+        }
+
+        .ai-quick-buttons {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 9px;
+        }
+
+        .ai-quick {
+            min-height: 75px;
+
+            padding: 12px;
+
+            text-align: left;
+
+            background: #f7fbfe;
+            color: #526b7e;
+
+            border: 1px solid #dfeaf2;
+            border-radius: 11px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .ai-quick:hover {
+            transform: translateY(-2px);
+
+            background: #edf8ff;
+            color: #1677c8;
+
+            border-color: #badcf2;
+        }
+
+        .ai-quick-icon {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 20px;
+        }
+
+        .ai-quick strong {
+            display: block;
+
+            font-size: 10px;
+        }
+
+
+        /* =====================================
+           MESSAGES
+        ===================================== */
+
+        .ai-messages {
+            height: 410px;
+
+            overflow-y: auto;
+
+            padding: 25px 22px;
+
+            background: #f8fbfd;
+        }
+
+        .ai-message-row {
+            display: flex;
+
+            margin-bottom: 13px;
+        }
+
+        .ai-message-row.user {
+            justify-content: flex-end;
+        }
+
+        .ai-message {
+            max-width: 70%;
+
+            padding: 11px 14px;
+
+            border-radius: 14px;
+
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .ai-message.bot {
+            color: #40596c;
+
+            background: white;
+
+            border: 1px solid #e0eaf1;
+
+            border-bottom-left-radius: 4px;
+        }
+
+        .ai-message.user {
+            color: white;
+
+            background: #1677c8;
+
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-label {
+            display: block;
+
+            margin-bottom: 4px;
+
+            font-size: 8px;
+            font-weight: bold;
+
+            opacity: 0.7;
+        }
+
+        .message-time {
+            display: block;
+
+            margin-top: 5px;
+
+            font-size: 8px;
+
+            opacity: 0.6;
+        }
+
+
+        /* =====================================
+           LINKS INSIDE AI
+        ===================================== */
+
+        .ai-link {
+            display: inline-block;
+
+            margin-top: 9px;
+            padding: 7px 11px;
+
+            color: #1677c8;
+            background: #e9f6ff;
+
+            border-radius: 7px;
+
+            font-size: 9px;
+            font-weight: bold;
+        }
+
+        .ai-link:hover {
+            background: #d8effd;
+        }
+
+
+        /* =====================================
+           TYPING
+        ===================================== */
+
+        .typing {
+            display: none;
+
+            padding: 0 22px 12px;
+
+            color: #8799a7;
+
+            font-size: 10px;
+
+            background: #f8fbfd;
+        }
+
+        .typing.show {
+            display: block;
+        }
+
+
+        /* =====================================
+           INPUT
+        ===================================== */
+
+        .ai-input-area {
+            display: flex;
+            align-items: flex-end;
+            gap: 9px;
+
+            padding: 14px;
+
+            background: white;
+
+            border-top: 1px solid #e5edf3;
+        }
+
+        .ai-input {
+            flex: 1;
+
+            min-height: 45px;
+            max-height: 100px;
+
+            padding: 12px;
+
+            resize: none;
+
+            background: #f8fbfd;
+
+            border: 1px solid #dce7ef;
+            border-radius: 10px;
+
+            outline: none;
+
+            font-size: 12px;
+        }
+
+        .ai-input:focus {
+            border-color: #1684d5;
+        }
+
+        .ai-send {
+            width: 45px;
+            height: 45px;
+
+            padding: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #1677c8;
+            color: white;
+
+            border: none;
+            border-radius: 10px;
+
+            font-size: 17px;
+
+            cursor: pointer;
+        }
+
+        .ai-send:hover {
+            background: #106bb2;
+        }
+
+
+        /* =====================================
+           FOOTER
+        ===================================== */
+
+        .ai-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-top: 12px;
+
+            color: #91a0ac;
+
+            font-size: 9px;
+        }
+
+        .clear-chat {
+            padding: 0;
+
+            color: #8c9ba7;
+            background: transparent;
+
+            border: none;
+
+            font-size: 9px;
+
+            cursor: pointer;
+        }
+
+        .clear-chat:hover {
+            color: #d0545e;
+            background: transparent;
+        }
+
+
+        /* =====================================
+           RESPONSIVE
+        ===================================== */
+
+        @media (max-width: 900px) {
+
+            .ai-quick-buttons {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .ai-banner {
+                align-items: flex-start;
+            }
+
+            .ai-status {
+                display: none;
+            }
+
+            .ai-quick-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-message {
+                max-width: 85%;
+            }
+
+        }
+
+    </style>
+
+<link rel="stylesheet" href="css/medcare-unified.css">
+</head>
+
+
+<body>
+
+
+<!-- =====================================
+     SIDEBAR
+===================================== -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            ✚
+        </div>
+
+        <div>
+            <h2>MedCare</h2>
+            <span>Medical Platform</span>
+        </div>
+
+    </div>
+
+
+    <nav class="menu">
+
+        <a href="index.html">
+            🏠 Басты бет
+        </a>
+
+        <a href="clinic.html">
+            🏥 Клиникалар
+        </a>
+
+        <a href="doctors.html">
+            👨‍⚕️ Дәрігерлер
+        </a>
+
+
+        <a href="map.html">
+            <span>🗺️</span>
+            <span>Клиникалар картасы</span>
+        </a>
+
+        <div class="menu-title">
+            МАМАНДЫҚТАР
+        </div>
+
+        <a href="specialties/dentistry.html">
+            🦷 Стоматология
+        </a>
+
+        <a href="specialties/therapist.html">
+            🩺 Терапевт
+        </a>
+
+        <a href="specialties/neurologist.html">
+            🧠 Невропатолог
+        </a>
+
+        <a href="specialties/ophthalmologist.html">
+            👁 Офтальмолог
+        </a>
+
+        <a href="specialties/traumatologist.html">
+            🦴 Травматолог
+        </a>
+
+        <a href="specialties/gynecologist.html">
+            👩‍⚕️ Гинеколог
+        </a>
+
+        <a href="specialties/urologist.html">
+            👨‍⚕️ Уролог
+        </a>
+
+        <a href="specialties/cardiologist.html">
+            ❤️ Кардиолог
+        </a>
+
+
+        <div class="menu-title">
+            ЖЕКЕ КАБИНЕТ
+        </div>
+
+        <a href="appointments.html">
+            📅 Менің жазылуларым
+        </a>
+
+        <a href="profile.html">
+            👤 Профиль
+        </a>
+
+
+        <div class="menu-title">
+            КӨМЕК
+        </div>
+
+        <a href="ai-assistant.html"
+           class="active">
+            🤖 MedCare AI
+        </a>
+
+        <a href="support.html">
+            🎧 Техникалық қолдау
+        </a>
+
+    </nav>
+
+</aside>
+
+
+<!-- =====================================
+     MAIN
+===================================== -->
+
+<main class="main">
+
+    <div class="ai-page">
+
+
+        <!-- PAGE TITLE -->
+
+        <div class="ai-page-header">
+
+            <span class="page-small-title">
+                MedCare / AI көмекші
+            </span>
+
+            <h1>
+                MedCare AI
+            </h1>
+
+            <p>
+                MedCare жүйесін пайдалануға көмектесетін
+                виртуалды көмекші
+            </p>
+
+        </div>
+
+
+        <!-- AI BANNER -->
+
+        <section class="ai-banner">
+
+            <div class="ai-logo">
+                🤖
+            </div>
+
+
+            <div class="ai-banner-text">
+
+                <span>
+                    MEDCARE AI
+                </span>
+
+                <h2>
+                    Сәлем, Дарига! 👋
+                </h2>
+
+                <p>
+                    Қажетті дәрігерді немесе клиниканы
+                    табуға, қабылдауға жазылу жолын
+                    түсіндіруге көмектесе аламын.
+                </p>
+
+            </div>
+
+
+            <div class="ai-status">
+
+                <div class="ai-status-dot"></div>
+
+                Дайын
+
+            </div>
+
+        </section>
+
+
+        <!-- CHAT -->
+
+        <section class="ai-chat">
+
+
+            <!-- QUICK -->
+
+            <div class="quick-area">
+
+                <h3>
+                    Жылдам сұрақтар
+                </h3>
+
+
+                <div class="ai-quick-buttons">
+
+
+                    <button
+                        class="ai-quick"
+                        data-question="Маған қандай дәрігер керек?"
+                    >
+
+                        <span class="ai-quick-icon">
+                            🩺
+                        </span>
+
+                        <strong>
+                            Қандай дәрігер керек?
+                        </strong>
+
+                    </button>
+
+
+                    <button
+                        class="ai-quick"
+                        data-question="Клиниканы қалай табамын?"
+                    >
+
+                        <span class="ai-quick-icon">
+                            🏥
+                        </span>
+
+                        <strong>
+                            Клиника табу
+                        </strong>
+
+                    </button>
+
+
+                    <button
+                        class="ai-quick"
+                        data-question="Қабылдауға қалай жазыламын?"
+                    >
+
+                        <span class="ai-quick-icon">
+                            📅
+                        </span>
+
+                        <strong>
+                            Қабылдауға жазылу
+                        </strong>
+
+                    </button>
+
+
+                    <button
+                        class="ai-quick"
+                        data-question="Менің жазылуларымды қайдан көремін?"
+                    >
+
+                        <span class="ai-quick-icon">
+                            📋
+                        </span>
+
+                        <strong>
+                            Менің жазылуларым
+                        </strong>
+
+                    </button>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- MESSAGES -->
+
+            <div
+                class="ai-messages"
+                id="aiMessages"
+            ></div>
+
+
+            <!-- TYPING -->
+
+            <div
+                class="typing"
+                id="typing"
+            >
+                🤖 MedCare AI жауап жазып жатыр...
+            </div>
+
+
+            <!-- INPUT -->
+
+            <div class="ai-input-area">
+
+                <textarea
+                    class="ai-input"
+                    id="aiInput"
+                    placeholder="Сұрағыңызды жазыңыз..."
+                ></textarea>
+
+
+                <button
+                    class="ai-send"
+                    id="aiSend"
+                    title="Жіберу"
+                >
+                    ➤
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <div class="ai-footer">
+
+            <span>
+                AI берген ақпарат дәрігердің консультациясын
+                алмастырмайды.
+            </span>
+
+
+            <button
+                class="clear-chat"
+                id="clearChat"
+            >
+                Чатты тазалау
+            </button>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<script>
+
+    /* =====================================
+       ELEMENTS
+    ===================================== */
+
+    const messagesBox =
+        document.getElementById("aiMessages");
+
+    const input =
+        document.getElementById("aiInput");
+
+    const sendButton =
+        document.getElementById("aiSend");
+
+    const typing =
+        document.getElementById("typing");
+
+    const quickButtons =
+        document.querySelectorAll(".ai-quick");
+
+    const storageKey =
+        "medcareAIChat";
+
+
+    /* =====================================
+       STORAGE
+    ===================================== */
+
+    function getMessages() {
+
+        return JSON.parse(
+            localStorage.getItem(storageKey)
+        ) || [];
+
+    }
+
+
+    function saveMessages(messages) {
+
+        localStorage.setItem(
+            storageKey,
+            JSON.stringify(messages)
+        );
+
+    }
+
+
+    /* =====================================
+       TIME
+    ===================================== */
+
+    function getTime() {
+
+        return new Date()
+            .toLocaleTimeString(
+                "kk-KZ",
+                {
+                    hour: "2-digit",
+                    minute: "2-digit"
+                }
+            );
+
+    }
+
+
+    /* =====================================
+       SAFE TEXT
+    ===================================== */
+
+    function escapeHTML(text) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent = text;
+
+        return div.innerHTML;
+
+    }
+
+
+    /* =====================================
+       RENDER
+    ===================================== */
+
+    function renderMessages() {
+
+        const messages =
+            getMessages();
+
+
+        messagesBox.innerHTML = "";
+
+
+        /* WELCOME */
+
+        if (messages.length === 0) {
+
+            messagesBox.innerHTML = `
+
+                <div class="ai-message-row">
+
+                    <div class="ai-message bot">
+
+                        <span class="message-label">
+                            🤖 MedCare AI
+                        </span>
+
+                        Сәлем! Мен MedCare виртуалды
+                        көмекшісімін. Қандай көмек қажет?
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+
+
+        messages.forEach(function(message) {
+
+            const row =
+                document.createElement("div");
+
+
+            row.className =
+                "ai-message-row " +
+                (
+                    message.sender === "user"
+                    ? "user"
+                    : ""
+                );
+
+
+            const bubble =
+                document.createElement("div");
+
+
+            bubble.className =
+                "ai-message " +
+                (
+                    message.sender === "user"
+                    ? "user"
+                    : "bot"
+                );
+
+
+            const label =
+                message.sender === "user"
+                ? "Сіз"
+                : "🤖 MedCare AI";
+
+
+            bubble.innerHTML = `
+
+                <span class="message-label">
+                    ${label}
+                </span>
+
+                ${escapeHTML(message.text)}
+
+                ${
+                    message.link
+                    ?
+
+                    `
+                    <br>
+
+                    <a
+                        href="${message.link}"
+                        class="ai-link"
+                    >
+                        ${message.linkText}
+                    </a>
+                    `
+
+                    :
+
+                    ""
+                }
+
+                <span class="message-time">
+                    ${message.time}
+                </span>
+
+            `;
+
+
+            row.appendChild(bubble);
+
+            messagesBox.appendChild(row);
+
+        });
+
+
+        messagesBox.scrollTop =
+            messagesBox.scrollHeight;
+
+    }
+
+
+    /* =====================================
+       AI ANSWER
+    ===================================== */
+
+    function getAIResponse(message) {
+
+        const text =
+            message.toLowerCase();
+
+
+        /* GREETING */
+
+        if (
+            text.includes("сәлем") ||
+            text.includes("привет") ||
+            text.includes("здравствуйте")
+        ) {
+
+            return {
+                text:
+                    "Сәлем! MedCare бойынша сұра                    қоя аласыз. Қажетті бөлімді табуға көмектесемін."
+            };
+
+        }
+
+
+        /* =====================================
+           DOCTOR / SPECIALIST
+        ===================================== */
+
+        if (
+            text.includes("қандай дәрігер") ||
+            text.includes("дәрігер керек") ||
+            text.includes("врач") ||
+            text.includes("маман")
+        ) {
+
+            return {
+                text:
+                    "Қажетті маманды таңдауға көмектесе аламын. MedCare жүйесінде терапевт, стоматолог, кардиолог, невропатолог, офтальмолог, травматолог, гинеколог және уролог бар.",
+
+                link:
+                    "doctors.html",
+
+                linkText:
+                    "Дәрігерлерді қарау →"
+            };
+
+        }
+
+
+        /* =====================================
+           DENTIST
+        ===================================== */
+
+        if (
+            text.includes("тіс") ||
+            text.includes("стоматолог") ||
+            text.includes("зуб")
+        ) {
+
+            return {
+                text:
+                    "Тіс және ауыз қуысына қатысты мәселелер бойынша стоматологқа жүгінуге болады. MedCare-да стоматологиялық клиникаларды қарай аласыз.",
+
+                link:
+                    "specialties/dentistry.html",
+
+                linkText:
+                    "Стоматологияны ашу →"
+            };
+
+        }
+
+
+        /* =====================================
+           HEART
+        ===================================== */
+
+        if (
+            text.includes("жүрек") ||
+            text.includes("кардиолог") ||
+            text.includes("сердце")
+        ) {
+
+            return {
+                text:
+                    "Жүрек және қан тамырлары мәселелері бойынша кардиолог мамандығын таңдауға болады.",
+
+                link:
+                    "specialties/cardiologist.html",
+
+                linkText:
+                    "Кардиологтарды қарау →"
+            };
+
+        }
+
+
+        /* =====================================
+           EYES
+        ===================================== */
+
+        if (
+            text.includes("көз") ||
+            text.includes("офтальмолог") ||
+            text.includes("окулист") ||
+            text.includes("глаз")
+        ) {
+
+            return {
+                text:
+                    "Көру және көз денсаулығына қатысты сұрақтар бойынша офтальмолог мамандығын таңдауға болады.",
+
+                link:
+                    "specialties/ophthalmologist.html",
+
+                linkText:
+                    "Офтальмологтарды қарау →"
+            };
+
+        }
+
+
+        /* =====================================
+           NERVOUS SYSTEM
+        ===================================== */
+
+        if (
+            text.includes("невропатолог") ||
+            text.includes("невролог") ||
+            text.includes("жүйке")
+        ) {
+
+            return {
+                text:
+                    "Жүйке жүйесіне қатысты мәселелер бойынша невропатолог мамандығын таңдауға болады.",
+
+                link:
+                    "specialties/neurologist.html",
+
+                linkText:
+                    "Невропатологтарды қарау →"
+            };
+
+        }
+
+
+        /* =====================================
+           THERAPIST
+        ===================================== */
+
+        if (
+            text.includes("терапевт") ||
+            text.includes("жалпы дәрігер")
+        ) {
+
+            return {
+                text:
+                    "Жалпы денсаулық жағдайы бойынша алдымен терапевтке жүгінуге болады.",
+
+                link:
+                    "specialties/therapist.html",
+
+                linkText:
+                    "Терапевттерді қарау →"
+            };
+
+        }
+
+
+        /* =====================================
+           CLINICS
+        ===================================== */
+
+        if (
+            text.includes("клиника") ||
+            text.includes("поликлиника") ||
+            text.includes("емхана")
+        ) {
+
+            return {
+                text:
+                    "MedCare жүйесінде мемлекеттік және жекеменшік клиникаларды қарауға болады.",
+
+                link:
+                    "clinic.html",
+
+                linkText:
+                    "Клиникаларды қарау →"
+            };
+
+        }
+
+
+        /* =====================================
+           BOOKING
+        ===================================== */
+
+        if (
+            text.includes("қалай жазыл") ||
+            text.includes("қабылдауға") ||
+            text.includes("записаться") ||
+            text.includes("приём") ||
+            text.includes("прием")
+        ) {
+
+            return {
+                text:
+                    "Қабылдауға жазылу үшін қажетті мамандықты таңдаңыз, клиниканы ашыңыз және «Жазылу» батырмасын басыңыз. Одан кейін дәрігерді, күнді және уақытты таңдауға болады.",
+
+                link:
+                    "doctors.html",
+
+                linkText:
+                    "Дәрігерді таңдау →"
+            };
+
+        }
+
+
+        /* =====================================
+           MY APPOINTMENTS
+        ===================================== */
+
+        if (
+            text.includes("менің жазыл") ||
+            text.includes("жазылулар") ||
+            text.includes("мои записи") ||
+            text.includes("записи")
+        ) {
+
+            return {
+                text:
+                    "Барлық жіберілген қабылдау запросдарын «Менің жазылуларым» бөлімінен көре аласыз. Сол жерде статусын тексеруге немесе жазылудан бас тартуға болады.",
+
+                link:
+                    "appointments.html",
+
+                linkText:
+                    "Менің жазылуларым →"
+            };
+
+        }
+
+
+        /* =====================================
+           PROFILE
+        ===================================== */
+
+        if (
+            text.includes("профиль") ||
+            text.includes("аккаунт") ||
+            text.includes("жеке кабинет")
+        ) {
+
+            return {
+                text:
+                    "Жеке мәліметтеріңізді «Профиль» бөлімінен қарай аласыз.",
+
+                link:
+                    "profile.html",
+
+                linkText:
+                    "Профильді ашу →"
+            };
+
+        }
+
+
+        /* =====================================
+           ATTACHED CLINIC
+        ===================================== */
+
+        if (
+            text.includes("тіркелген") ||
+            text.includes("прикреп") ||
+            text.includes("менің поликлиникам")
+        ) {
+
+            return {
+                text:
+                    "Тіркелген поликлиникаңыз және сол ұйымдағы дәрігерлер «Дәрігерлер» бөлімінің жоғарғы жағында көрсетіледі.",
+
+                link:
+                    "doctors.html",
+
+                linkText:
+                    "Менің дәрігерлерім →"
+            };
+
+        }
+
+
+        /* =====================================
+           TECHNICAL SUPPORT
+        ===================================== */
+
+        if (
+            text.includes("қате") ||
+            text.includes("ошибка") ||
+            text.includes("жұмыс істемейді") ||
+            text.includes("не работает") ||
+            text.includes("тех") ||
+            text.includes("поддерж")
+        ) {
+
+            return {
+                text:
+                    "Егер MedCare сайтында техникалық мәселе туындаса, техникалық қолдау қызметіне хабарласа аласыз.",
+
+                link:
+                    "support.html",
+
+                linkText:
+                    "Техникалық қолдау →"
+            };
+
+        }
+
+
+        /* =====================================
+           URGENT / MEDICAL SAFETY
+        ===================================== */
+
+        if (
+            text.includes("дем ала алмай") ||
+            text.includes("тыныс ала алмай") ||
+            text.includes("есімнен") ||
+            text.includes("қан кет") ||
+            text.includes("сильная боль") ||
+            text.includes("не могу дышать")
+        ) {
+
+            return {
+                text:
+                    "Бұл шұғыл медициналық жағдай болуы мүмкін. MedCare AI мұндай жағдайда диагноз қоймайды. Жедел медициналық көмекке немесе жақын медициналық ұйымға жүгініңіз."
+            };
+
+        }
+
+
+        /* =====================================
+           SYMPTOMS
+        ===================================== */
+
+        if (
+            text.includes("ауырады") ||
+            text.includes("ауырсын") ||
+            text.includes("температура") ||
+            text.includes("қызу") ||
+            text.includes("болит")
+        ) {
+
+            return {
+                text:
+                    "Мен диагноз қоя алмаймын, бірақ қажетті маманды табуға көмектесе аламын. Жалпы шағымдар бойынша терапевттен бастауға болады.",
+
+                link:
+                    "specialties/therapist.html",
+
+                linkText:
+                    "Терапевтті қарау →"
+            };
+
+        }
+
+
+        /* =====================================
+           THANKS
+        ===================================== */
+
+        if (
+            text.includes("рахмет") ||
+            text.includes("спасибо")
+        ) {
+
+            return {
+                text:
+                    "Қуана көмектесемін! 😊 MedCare бойынша тағы сұрағыңыз болса, жаза беріңіз."
+            };
+
+        }
+
+
+        /* =====================================
+           DEFAULT
+        ===================================== */
+
+        return {
+            text:
+                "Сұрағыңызды толық түсінбедім. Дәрігер, клиника, қабылдауға жазылу немесе MedCare жүйесін пайдалану туралы сұрай аласыз."
+        };
+
+    }
+
+
+    /* =====================================
+       SEND USER MESSAGE
+    ===================================== */
+
+    function sendMessage(customText) {
+
+        const text =
+            customText || input.value.trim();
+
+
+        if (text === "") {
+            return;
+        }
+
+
+        const messages =
+            getMessages();
+
+
+        /* USER */
+
+        messages.push({
+
+            sender:
+                "user",
+
+            text:
+                text,
+
+            time:
+                getTime()
+
+        });
+
+
+        saveMessages(messages);
+
+        input.value = "";
+
+        renderMessages();
+
+
+        /* TYPING */
+
+        typing.classList.add("show");
+
+
+        /* MEDCARE AI: backend first, local assistant as fallback */
+
+        (async function () {
+            let response;
+
+            try {
+                const apiResponse = await fetch("http://localhost:3000/api/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: text })
+                });
+
+                if (!apiResponse.ok) {
+                    throw new Error("AI server unavailable");
+                }
+
+                const data = await apiResponse.json();
+                response = { text: data.reply };
+            } catch (error) {
+                console.warn("MedCare AI fallback:", error);
+                response = getAIResponse(text);
+            }
+
+            const updatedMessages = getMessages();
+            updatedMessages.push({
+                sender: "bot",
+                text: response.text,
+                link: response.link || "",
+                linkText: response.linkText || "",
+                time: getTime()
+            });
+
+            saveMessages(updatedMessages);
+            typing.classList.remove("show");
+            renderMessages();
+        })();
+
+    }
+
+
+    /* =====================================
+       SEND BUTTON
+    ===================================== */
+
+    sendButton.addEventListener(
+        "click",
+        function() {
+
+            sendMessage();
+
+        }
+    );
+
+
+    /* =====================================
+       ENTER
+    ===================================== */
+
+    input.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Enter" &&
+                !event.shiftKey
+            ) {
+
+                event.preventDefault();
+
+                sendMessage();
+
+            }
+
+        }
+    );
+
+
+    /* =====================================
+       QUICK QUESTIONS
+    ===================================== */
+
+    quickButtons.forEach(
+        function(button) {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    const question =
+                        button.dataset.question;
+
+
+                    sendMessage(
+                        question
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    /* =====================================
+       CLEAR CHAT
+    ===================================== */
+
+    document.getElementById(
+        "clearChat"
+    ).addEventListener(
+        "click",
+        function() {
+
+            const answer =
+                confirm(
+                    "Чат тарихын тазалайсыз ба?"
+                );
+
+
+            if (!answer) {
+                return;
+            }
+
+
+            localStorage.removeItem(
+                storageKey
+            );
+
+
+            renderMessages();
+
+        }
+    );
+
+
+    /* =====================================
+       FIRST LOAD
+    ===================================== */
+
+    renderMessages();
+
+</script>
+
+</body>
+</html>
