@@ -1,6 +1,22 @@
+# Node.js
 node_modules/
+react-app/node_modules/
+
+# Құпия кілттер
 .env
 .env.*
 !.env.example
+
+# SQLite деректер базасы
+database/*.db
+database/*.db-shm
+database/*.db-wal
+
+# Лог файлдары
 *.log
+
+# Жүйелік файлдар
 .DS_Store
+
+# React build
+react-app/dist/

@@ -1,0 +1,45 @@
+
+[
+  {
+    "id": "city-dent-dentistry",
+    "name": "City Dent",
+    "address": "Астана қаласы",
+    "type": "private",
+    "phone": "+7 (7172) 93-98-81"
+  },
+  {
+    "id": "dental-care-dentistry",
+    "name": "Dental Care",
+    "address": "Астана қаласы",
+    "type": "private",
+    "phone": "+7 (7172) 90-56-91"
+  },
+  {
+    "id": "smile-clinic-dentistry",
+    "name": "Smile Clinic",
+    "address": "Астана қаласы",
+    "type": "private",
+    "phone": "+7 (7172) 11-55-25"
+  },
+  {
+    "id": "family-dent-dentistry",
+    "name": "Family Dent",
+    "address": "Астана қаласы",
+    "type": "private",
+    "phone": "+7 (7172) 51-81-62"
+  },
+  {
+    "id": "medcare-clinic-therapist",
+    "name": "MedCare Clinic",
+    "address": "Астана қаласы",
+    "type": "private",
+    "phone": "+7 (7172) 45-48-28"
+  },
+  {
+    "id": "central-medical-therapist",
+    "name": "Central Medical",
+    "address": "Астана қаласы",
+    "type": "public",
+    "phone": "+7 (7172) 34-50-54"
+  }
+]

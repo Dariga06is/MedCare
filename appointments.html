@@ -692,425 +692,343 @@
 
 <script>
 
-    const list =
-        document.getElementById(
-            "appointmentsList"
-        );
+    
+const list = document.getElementById("appointmentsList");
+const empty = document.getElementById("emptyAppointments");
+const filterButtons = document.querySelectorAll(".appointment-filter");
+const modal = document.getElementById("detailsModal");
 
-    const empty =
-        document.getElementById(
-            "emptyAppointments"
-        );
+let currentFilter = "all";
+let appointmentsCache = [];
+let loading = false;
 
-    const filterButtons =
-        document.querySelectorAll(
-            ".appointment-filter"
-        );
-
-    let currentFilter = "all";
-
-
-    /* ===============================
-       GET DATA
-    =============================== */
-
-    function getAppointments() {
-
+function getAppointments() {
+    try {
         return JSON.parse(
-            localStorage.getItem(
-                "medcareAppointments"
-            )
+            localStorage.getItem("medcareAppointments")
         ) || [];
-
+    } catch (error) {
+        console.error("Жазылуларды оқу қатесі:", error);
+        return [];
     }
-
-
-    /* ===============================
-       STATUS CLASS
-    =============================== */
-
-    function getStatusClass(status) {
-
-        if (status === "Аяқталды") {
-            return "status-done";
-        }
-
-        if (status === "Бас тартылды") {
-            return "status-cancelled";
-        }
-
-        return "status-waiting";
-
-    }
-
-
-    /* ===============================
-       RENDER
-    =============================== */
-
-    function renderAppointments() {
-
-        const appointments =
-            getAppointments();
-
-
-        const filtered =
-            appointments.filter(
-                function (appointment) {
-
-                    if (
-                        currentFilter === "all"
-                    ) {
-                        return true;
-                    }
-
-                    return (
-                        appointment.status ===
-                        currentFilter
-                    );
-
-                }
-            );
-
-
-        list.innerHTML = "";
-
-
-        if (filtered.length === 0) {
-
-            empty.style.display =
-                "block";
-
-            return;
-
-        }
-
-
-        empty.style.display =
-            "none";
-
-
-        filtered
-            .slice()
-            .reverse()
-            .forEach(
-                function (appointment) {
-
-
-                    const card =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    card.className =
-                        "appointment-card";
-
-
-                    card.innerHTML = `
-
-                        <div class="appointment-icon">
-                            🦷
-                        </div>
-
-
-                        <div class="appointment-info">
-
-                            <div class="appointment-top">
-
-                                <h3>
-                                    ${appointment.specialty}
-                                </h3>
-
-                                <span class="
-                                    appointment-status
-                                    ${getStatusClass(
-                                        appointment.status
-                                    )}
-                                ">
-                                    ${appointment.status}
-                                </span>
-
-                            </div>
-
-
-                            <div class="clinic-name">
-                                ${appointment.clinic}
-                            </div>
-
-
-                            <div class="doctor-name">
-                                👩‍⚕️ ${appointment.doctor}
-                            </div>
-
-
-                            <div class="appointment-meta">
-
-                                <span>
-                                    📅 ${appointment.date}
-                                </span>
-
-                                <span>
-                                    🕐 ${appointment.time}
-                                </span>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="appointment-actions">
-
-                            <button
-                                class="details-btn"
-                                onclick="showDetails(
-                                    ${appointment.id}
-                                )"
-                            >
-                                Толығырақ
-                            </button>
-
-
-                            ${
-                                appointment.status ===
-                                "Күтуде"
-
-                                ?
-
-                                `
-                                <button
-                                    class="cancel-btn"
-                                    onclick="cancelAppointment(
-                                        ${appointment.id}
-                                    )"
-                                >
-                                    Бас тарту
-                                </button>
-                                `
-
-                                :
-
-                                ""
-                            }
-
-                        </div>
-
-                    `;
-
-
-                    list.appendChild(card);
-
-                }
-            );
-
-    }
-
-
-    /* ===============================
-       FILTER
-    =============================== */
-
-    filterButtons.forEach(
-        function (button) {
-
-            button.addEventListener(
-                "click",
-                function () {
-
-
-                    filterButtons.forEach(
-                        function (item) {
-
-                            item.classList.remove(
-                                "active"
-                            );
-
-                        }
-                    );
-
-
-                    button.classList.add(
-                        "active"
-                    );
-
-
-                    currentFilter =
-                        button.dataset.filter;
-
-
-                    renderAppointments();
-
-                }
-            );
-
-        }
+}
+
+function saveAppointments(appointments) {
+    localStorage.setItem(
+        "medcareAppointments",
+        JSON.stringify(appointments)
     );
+}
 
+function getStatusClass(status) {
+    if (status === "Аяқталды" || status === "completed") {
+        return "status-done";
+    }
 
-    /* ===============================
-       CANCEL
-    =============================== */
+    if (
+        status === "Бас тартылды" ||
+        status === "cancelled" ||
+        status === "canceled"
+    ) {
+        return "status-cancelled";
+    }
 
-    function cancelAppointment(id) {
+    return "status-waiting";
+}
 
-        const answer =
-            confirm(
-                "Қабылдаудан бас тартқыңыз келе ме?"
-            );
+function normalizeStatus(status) {
+    const statuses = {
+        pending: "Күтуде",
+        confirmed: "Күтуде",
+        completed: "Аяқталды",
+        cancelled: "Бас тартылды",
+        canceled: "Бас тартылды"
+    };
 
+    return statuses[status] || status || "Күтуде";
+}
 
-        if (!answer) {
-            return;
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+}
+
+function canCancel(appointment) {
+    const status = normalizeStatus(appointment.status);
+
+    return status === "Күтуде";
+}
+
+// Дерекқордан қабылдауларды жүктеу
+async function loadAppointments() {
+    if (loading) return;
+
+    loading = true;
+
+    try {
+        const response = await fetch("/api/appointments");
+        if (!response.ok) {
+            throw new Error("Серверден қабылдаулар алынбады");
         }
 
+        const data = await response.json();
 
-        const appointments =
-            getAppointments();
+        const serverAppointments = Array.isArray(data)
+            ? data
+            : data.appointments;
 
-
-        const appointment =
-            appointments.find(
-                function (item) {
-
-                    return item.id === id;
-
-                }
-            );
-
-
-        if (appointment) {
-
-            appointment.status =
-                "Бас тартылды";
-
+        if (!Array.isArray(serverAppointments)) {
+            throw new Error("Сервер жауабының форматы дұрыс емес");
         }
 
+        // Сервердегі деректерді бұрынғы бет пішіміне келтіру
+        appointmentsCache = serverAppointments.map(item => ({
+            id: item.id,
+            serverId: item.id,
+            specialty: item.specialty || item.doctor_specialty || "Мамандық көрсетілмеген",
+            clinic: item.clinic || item.clinic_name || "Клиника көрсетілмеген",
+            doctor: item.doctor || item.doctor_name || "Дәрігер көрсетілмеген",
+            date: item.date || item.appointment_date || "",
+            time: item.time || item.appointment_time || "",
+            status: normalizeStatus(item.status)
+        }));
 
-        localStorage.setItem(
-            "medcareAppointments",
-            JSON.stringify(
-                appointments
-            )
-        );
-
+        // Басқа беттер әлі localStorage оқитын болса, тізімді синхрондаймыз
+        saveAppointments(appointmentsCache);
 
         renderAppointments();
+    } catch (error) {
+        console.error("Қабылдауларды жүктеу қатесі:", error);
 
+        // Сервер қолжетімсіз болса, жергілікті деректерді көрсетеміз
+        appointmentsCache = getAppointments();
+        renderAppointments();
+
+        if (appointmentsCache.length === 0) {
+            empty.style.display = "block";
+            empty.querySelector("p").textContent =
+                "Қабылдауларды жүктеу мүмкін болмады. Сервердің қосулы екенін тексеріңіз.";
+        }
+    } finally {
+        loading = false;
+    }
+}
+
+function renderAppointments() {
+    const appointments = appointmentsCache.length
+        ? appointmentsCache
+        : getAppointments();
+
+    const filtered = appointments.filter(appointment => {
+        if (currentFilter === "all") return true;
+
+        return normalizeStatus(appointment.status) === currentFilter;
+    });
+
+    list.innerHTML = "";
+
+    if (filtered.length === 0) {
+        empty.style.display = "block";
+        return;
     }
 
+    empty.style.display = "none";
 
-    /* ===============================
-       DETAILS
-    =============================== */
+    filtered.slice().reverse().forEach(appointment => {
+        const status = normalizeStatus(appointment.status);
+        const id = Number(appointment.serverId ?? appointment.id);
 
-    const modal =
-        document.getElementById(
-            "detailsModal"
-        );
+        const card = document.createElement("div");
+        card.className = "appointment-card";
 
+        card.innerHTML = `
+            <div class="appointment-icon">🩺</div>
 
-    function showDetails(id) {
+            <div class="appointment-info">
+                <div class="appointment-top">
+                    <h3>${escapeHTML(appointment.specialty)}</h3>
+                    <span class="appointment-status ${getStatusClass(status)}">
+                        ${escapeHTML(status)}
+                    </span>
+                </div>
 
-        const appointments =
-            getAppointments();
+                <div class="clinic-name">
+                    ${escapeHTML(appointment.clinic)}
+                </div>
 
+                <div class="doctor-name">
+                    👩‍⚕️ ${escapeHTML(appointment.doctor)}
+                </div>
 
-        const appointment =
-            appointments.find(
-                function (item) {
+                <div class="appointment-meta">
+                    <span>📅 ${escapeHTML(appointment.date)}</span>
+                    <span>🕐 ${escapeHTML(appointment.time)}</span>
+                </div>
+            </div>
 
-                    return item.id === id;
+            <div class="appointment-actions">
+                <button class="details-btn" data-action="details"
+                    data-id="${escapeHTML(id)}">
+                    Толығырақ
+                </button>
 
+                ${
+                    canCancel(appointment)
+                    ? `<button class="cancel-btn" data-action="cancel"
+                           data-id="${escapeHTML(id)}">
+                           Бас тарту
+                       </button>`
+                    : ""
                 }
-            );
+            </div>
+        `;
 
+        list.appendChild(card);
+    });
+}
 
-        if (!appointment) {
-            return;
-        }
+// Сүзгілер
+filterButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        filterButtons.forEach(item => item.classList.remove("active"));
+        button.classList.add("active");
 
+        currentFilter = button.dataset.filter;
+        renderAppointments();
+    });
+});
 
-        document.getElementById(
-            "modalSpecialty"
-        ).textContent =
-            appointment.specialty;
+// Батырмалардың әрекеттері
+list.addEventListener("click", async event => {
+    const button = event.target.closest("button[data-action]");
+    if (!button) return;
 
+    const id = Number(button.dataset.id);
 
-        document.getElementById(
-            "modalClinic"
-        ).textContent =
-            appointment.clinic;
-
-
-        document.getElementById(
-            "modalDoctor"
-        ).textContent =
-            appointment.doctor;
-
-
-        document.getElementById(
-            "modalDate"
-        ).textContent =
-            appointment.date;
-
-
-        document.getElementById(
-            "modalTime"
-        ).textContent =
-            appointment.time;
-
-
-        document.getElementById(
-            "modalStatus"
-        ).textContent =
-            appointment.status;
-
-
-        modal.classList.add(
-            "open"
-        );
-
+    if (button.dataset.action === "details") {
+        showDetails(id);
+        return;
     }
 
+    if (button.dataset.action === "cancel") {
+        await cancelAppointment(id, button);
+    }
+});
 
-    /* CLOSE MODAL */
-
-    document.getElementById(
-        "closeModal"
-    ).addEventListener(
-        "click",
-        function () {
-
-            modal.classList.remove(
-                "open"
-            );
-
-        }
+// Қабылдауды серверде болдырмау
+async function cancelAppointment(id, button) {
+    const answer = confirm(
+        "Қабылдаудан бас тартқыңыз келе ме?"
     );
 
+    if (!answer) return;
 
-    modal.addEventListener(
-        "click",
-        function (event) {
+    const appointment = appointmentsCache.find(
+        item => Number(item.serverId ?? item.id) === id
+    );
 
-            if (event.target === modal) {
+    if (!appointment) {
+        alert("Қабылдау табылмады.");
+        return;
+    }
 
-                modal.classList.remove(
-                    "open"
-                );
+    button.disabled = true;
+    button.textContent = "Өңделуде...";
 
+    try {
+        const response = await fetch(
+            `/api/appointments/${id}/cancel`,
+            {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                }
             }
+        );
 
-        }
+        const data = await response.json();
+
+       if (!response.ok || data.success === false) {
+    throw new Error(
+        `HTTP ${response.status}: ${
+            data.message || data.error || "Белгісіз сервер қатесі"
+        }`
+    );
+}
+
+        // Сервер сәтті жауап бергеннен кейін ғана мәртебені өзгертеміз
+        appointment.status = "Бас тартылды";
+        saveAppointments(appointmentsCache);
+
+        renderAppointments();
+        alert("Қабылдаудан бас тартылды.");
+    } catch (error) {
+        console.error("Бас тарту қатесі:", error);
+        alert(
+            error.message ||
+            "Серверге қосылу мүмкін болмады. Қайта көріңіз."
+        );
+
+        button.disabled = false;
+        button.textContent = "Бас тарту";
+    }
+}
+
+// Толық ақпарат терезесі
+function showDetails(id) {
+    const appointments = appointmentsCache.length
+        ? appointmentsCache
+        : getAppointments();
+
+    const appointment = appointments.find(
+        item => Number(item.serverId ?? item.id) === id
     );
 
+    if (!appointment) {
+        alert("Қабылдау табылмады.");
+        return;
+    }
 
-    /* FIRST LOAD */
-        /* ===============================
-       FIRST LOAD
-    =============================== */
+    document.getElementById("modalSpecialty").textContent =
+        appointment.specialty || "—";
 
-    renderAppointments();
+    document.getElementById("modalClinic").textContent =
+        appointment.clinic || "—";
+
+    document.getElementById("modalDoctor").textContent =
+        appointment.doctor || "—";
+
+    document.getElementById("modalDate").textContent =
+        appointment.date || "—";
+
+    document.getElementById("modalTime").textContent =
+        appointment.time || "—";
+
+    document.getElementById("modalStatus").textContent =
+        normalizeStatus(appointment.status);
+
+    modal.classList.add("open");
+}
+
+document.getElementById("closeModal").addEventListener("click", () => {
+    modal.classList.remove("open");
+});
+
+modal.addEventListener("click", event => {
+    if (event.target === modal) {
+        modal.classList.remove("open");
+    }
+});
+
+// Бет ашылғанда және сервердегі өзгерістерді тексергенде жүктеу
+loadAppointments();
+setInterval(loadAppointments, 10000);
+
 
 </script>
 
